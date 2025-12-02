@@ -1,13 +1,13 @@
 module.exports = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        port: "",
-        pathname: "/my-account/**",
-        search: "",
-      },
-    ],
-  },
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "res.cloudinary.com",
+				port: "",
+				pathname: "/the-dumpling-gallery/**",
+				search: "",
+			},
+		],
+	},
 };
