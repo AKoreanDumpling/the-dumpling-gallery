@@ -3,9 +3,11 @@
     "",
     "\\components",
     "\\components\\Icons",
+    "\\Local settings (.vs)",
+    "\\Local settings (.vs)\\the-dumpling-gallery.slnx",
     "\\pages",
     "\\pages\\p",
-    "\\utils"
+    "\\public"
   ],
   "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": true

@@ -23,7 +23,6 @@
 # misc
 .DS_Store
 *.pem
-/.vs/
 
 # debug
 npm-debug.log*
@@ -39,4 +38,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/.vs/slnx.sqlite
+/.vs/*
