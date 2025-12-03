@@ -65,18 +65,30 @@ export default function Modal({
 				ref={overlayRef}
 				as={motion.div}
 				key="backdrop"
-				className="fixed inset-0 z-30 bg-black/70 backdrop-blur-2xl"
+				className="fixed inset-0 z-30 flex items-center justify-center bg-black/70 backdrop-blur-2xl"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-			/>
-			<SharedModal
-				index={curIndex}
-				direction={direction}
-				images={images}
-				changePhotoId={changePhotoId}
-				closeModal={handleClose}
-				navigation={true}
-			/>
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+					className="relative z-50 flex h-full w-full items-center justify-center pointer-events-none"
+					onClick={(e) => e.stopPropagation()}
+				>
+					<SharedModal
+						index={curIndex}
+						direction={direction}
+						images={images}
+						changePhotoId={changePhotoId}
+						closeModal={handleClose}
+						navigation={true}
+					/>
+				</motion.div>
+			</Dialog.Overlay>
 		</Dialog>
 	);
 }
