@@ -2,13 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\components",
-    "\\components\\Icons",
-    "\\Local settings (.vs)",
-    "\\Local settings (.vs)\\the-dumpling-gallery.slnx",
     "\\pages",
-    "\\pages\\p",
-    "\\public"
+    "\\styles",
+    "\\utils"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\components\\Modal.tsx",
   "PreviewInSolutionExplorer": true
 }
