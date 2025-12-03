@@ -39,3 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /.vs/*
+/.vs/the-dumpling-gallery.slnx/v18/.wsuo
+/.vs/the-dumpling-gallery.slnx/v18/DocumentLayout.json
+/.vs/the-dumpling-gallery.slnx/v18/DocumentLayout.backup.json
