@@ -80,6 +80,13 @@ export default function SharedModal({
 									priority
 									alt="Main image"
 									onLoad={() => setLoaded(true)}
+									style={{
+										width: 'auto',
+										height: 'auto',
+										maxWidth: 'calc(100vw - 128px)',
+										maxHeight: 'calc(100vh - 128px)',
+										objectFit: 'contain',
+									}}
 								/>
 							</motion.div>
 						</AnimatePresence>
@@ -116,10 +123,10 @@ export default function SharedModal({
 							<div className="absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
 								{navigation ? (
 									<a
-										href={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${currentImage.public_id}.${currentImage.format}`}
+										href={`/p/${index}`}
 										className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
 										target="_blank"
-										title="Open full quality version (from CDN - original resolution)"
+										title="Open full quality version"
 										rel="noreferrer"
 									>
 										<ArrowTopRightOnSquareIcon className="h-5 w-5" />
@@ -143,7 +150,7 @@ export default function SharedModal({
 										)
 									}
 									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-									title="Open full quality version (from CDN - original resolution)"
+									title="Download full quality version (from CDN - original resolution)"
 								>
 									<ArrowDownTrayIcon className="h-5 w-5" />
 								</button>
