@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+﻿import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,10 +33,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 		<>
 			<Head>
 				<title>The Dumpling Gallery</title>
-				<Analytics />
-				<SpeedInsights />
 			</Head>
 			<main className="mx-auto max-w-[1960px] p-4">
+				<Analytics />
+				<SpeedInsights />
 				<AnimatePresence mode="wait">
 					{photoId && (
 						<Modal
@@ -55,20 +55,29 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							</span>
 							<span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
-
-						<h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery
+						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
+							The Dumpling Gallery: <br /> Culture Crawl Day 3
 						</h1>
+
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
 							View and download full resolution photos! (best experienced on desktop)
 						</p>
+
+						<a
+							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
+							href="#credits"
+
+							rel="noreferrer"
+						>
+							Go to Photo Credits (special shoutout to Johanna!)
+						</a>
 						<a
 							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
 							href="https://github.com/akoreandumpling/the-dumpling-gallery"
 							target="_blank"
 							rel="noreferrer"
 						>
-							Source on GitHub
+							Code on GitHub
 						</a>
 					</div>
 					{images.map(({ id, public_id, format, blurDataUrl }) => (
@@ -81,7 +90,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
 						>
 							<Image
-								alt="Next.js Conf photo"
+								alt="Photo"
 								className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
 								style={{ transform: "translate3d(0, 0, 0)" }}
 								placeholder="blur"
@@ -96,37 +105,41 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							/>
 						</Link>
 					))}
+
 				</div>
-			</main>
-			<footer className="p-6 text-center text-white/80 sm:p-12">
-				Photo Credit:{" "}
-				<a
-					href="https://twitter.com/@AKoreanDumpling"
-					target="_blank"
-					className="font-semibold hover:text-white"
-					rel="noreferrer"
-				>
-					Nathan Mah
-				</a>
-				{/*,{" "}*/}
-				{/*<a*/}
-				{/*	href="https://www.newrevmedia.com/"*/}
-				{/*	target="_blank"*/}
-				{/*	className="font-semibold hover:text-white"*/}
-				{/*	rel="noreferrer"*/}
-				{/*>*/}
-				{/*	Jenny Morgan*/}
-				{/*</a>*/}
-				{/*, and{" "}*/}
-				{/*<a*/}
-				{/*	href="https://www.garysextonphotography.com/"*/}
-				{/*	target="_blank"*/}
-				{/*	className="font-semibold hover:text-white"*/}
-				{/*	rel="noreferrer"*/}
-				{/*>*/}
-				{/*	Gary Sexton*/}
-				{/*</a>{" "}*/}
-			</footer>
+
+			</main >
+
+			<a id="credits">
+				<footer className="p-6 text-center text-white/80 sm:p-12">
+					Photo Credit:{" "}
+					<a
+						href="https://twitter.com/@AKoreanDumpling"
+						target="_blank"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						Nathan Mah
+					</a>
+					{" "}and{" "}
+					<a
+						href="https://www.instagram.com/johannamarie.23/"
+						target="_blank"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						Johanna
+					</a>
+					<br />
+					<a
+						href="#"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						Back to top
+					</a>
+				</footer>
+			</a>
 		</>
 	);
 };

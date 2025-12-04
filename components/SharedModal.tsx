@@ -78,7 +78,7 @@ export default function SharedModal({
 									width={navigation ? 1280 : 1920}
 									height={navigation ? 853 : 1280}
 									priority
-									alt="Main image"
+									alt="Image"
 									onLoad={() => setLoaded(true)}
 									style={{
 										width: 'auto',
@@ -125,8 +125,7 @@ export default function SharedModal({
 									<a
 										href={`/p/${index}`}
 										className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-										target="_blank"
-										title="Open full quality version"
+										title="Open fullsize version"
 										rel="noreferrer"
 									>
 										<ArrowTopRightOnSquareIcon className="h-5 w-5" />
@@ -150,7 +149,7 @@ export default function SharedModal({
 										)
 									}
 									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-									title="Download full quality version (from CDN - original resolution)"
+									title="Download fullsize version (from CDN - original resolution)"
 								>
 									<ArrowDownTrayIcon className="h-5 w-5" />
 								</button>
