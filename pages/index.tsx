@@ -60,7 +60,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
-							View and download full resolution photos! (best experienced on desktop)
+							View and download full resolution photos! Images are typically removed after 7 days - best experienced on desktop!
 						</p>
 
 						<a
