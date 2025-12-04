@@ -138,6 +138,15 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 					>
 						Back to top
 					</a>
+					{" "}{" "}
+					<a
+						href="https://github.com/AKoreanDumpling/the-dumpling-gallery/blob/main/LICENSE"
+						target="_blank"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						View license
+					</a>
 				</footer>
 			</a>
 		</>
