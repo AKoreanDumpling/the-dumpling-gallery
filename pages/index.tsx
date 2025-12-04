@@ -35,8 +35,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 				<title>The Dumpling Gallery</title>
 			</Head>
 			<main className="mx-auto max-w-[1960px] p-4">
-				<Analytics />
-				<SpeedInsights />
+
 				<AnimatePresence mode="wait">
 					{photoId && (
 						<Modal
@@ -107,7 +106,8 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 					))}
 
 				</div>
-
+				<Analytics />
+				<SpeedInsights />
 			</main >
 
 			<a id="credits">
