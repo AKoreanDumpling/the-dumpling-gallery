@@ -57,11 +57,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							<span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
 						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery: <br /> Culture Crawl Day 3
+							The Dumpling Gallery: <br /> Culture Crawl Day 4
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
-							View and download full resolution photos! Images are typically removed after 7 days - best experienced on desktop!
+							View and download full resolution photos! Images are typically removed after 72 hours - save the ones you like!
 						</p>
 
 						<a
@@ -70,10 +70,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 							rel="noreferrer"
 						>
-							Go to Photo Credits (special shoutout to Johanna!)
+							Go to Photo Credits
 						</a>
 						<a
-							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
+							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
 							href="https://github.com/akoreandumpling/the-dumpling-gallery"
 							target="_blank"
 							rel="noreferrer"
@@ -115,43 +115,44 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 			<footer className="p-6 text-center text-white/80 sm:p-12">
 				<hr />
-				<h1 className="mt-8 mb-3 text-base font-bold uppercase tracking-widest" id="credits"> Photo Credit:</h1>
-
-				<a
-					href="https://twitter.com/@AKoreanDumpling"
-					target="_blank"
-					className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
-					rel="noreferrer"
-				>
-					Nathan Mah
-				</a>
-				{"  "}
-				<a
-					href="https://www.instagram.com/johannamarie.23/"
-					target="_blank"
-					className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
-					rel="noreferrer"
-				>
-					Johanna
-				</a>
-				<br /> <br /><br />
-				<a
-					href="#"
-					className="font-semibold hover:text-white"
-					rel="noreferrer"
-				>
-					Back to top
-				</a>
-				{" | "}
-				<a
-					href="https://github.com/AKoreanDumpling/the-dumpling-gallery/blob/main/LICENSE"
-					target="_blank"
-					className="font-semibold hover:text-white"
-					rel="noreferrer"
-				>
-					View license
-				</a>
-			</footer>
+				<h1 className="mt-6 mb-2 text-base font-bold uppercase tracking-widest" id="credits"> Photo Credit:</h1>
+				<div className="mt-4">
+					<a
+						href="https://twitter.com/@AKoreanDumpling"
+						target="_blank"
+						className="pointer mt-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
+						rel="noreferrer"
+					>
+						Nathan Mah
+					</a>
+					<br />
+					<a
+						href="https://www.instagram.com/johannamarie.23/"
+						target="_blank"
+						className="pointer m-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
+						rel="noreferrer"
+					>
+						Johanna
+					</a></div>
+				<div className="mt-4">
+					<a
+						href="#"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						Back to top
+					</a>
+					{" | "}
+					<a
+						href="https://github.com/AKoreanDumpling/the-dumpling-gallery/blob/main/LICENSE"
+						target="_blank"
+						className="font-semibold hover:text-white"
+						rel="noreferrer"
+					>
+						View license
+					</a>
+				</div>
+			</footer >
 		</>
 	);
 };
