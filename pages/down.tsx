@@ -3,11 +3,11 @@ import Head from "next/head";
 import Bridge from "../components/Icons/Bridge";
 
 
-const Down: NextPage = () => {
+const Home: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>The Dumpling Gallery</title>
+				<title>The Dumpling Gallery is down for maintenance</title>
 			</Head>
 
 			<main className="mx-auto max-w-[1960px] p-4">
@@ -22,11 +22,11 @@ const Down: NextPage = () => {
 							<span className="absolute left-0 right-0 bottom-0 h-[250px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
 						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery<br />is down for Maintenance
+							503<br />The Dumpling Gallery is down for Maintenance
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
-							We will be back online shortly with new photos, thank you for your patience!
+							We will be back online shortly with uodated photos, thank you for your patience!
 						</p>
 					</div>
 				</div>
@@ -66,4 +66,4 @@ const Down: NextPage = () => {
 	);
 };
 
-export default Down;
+export default Home;
