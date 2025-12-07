@@ -10,7 +10,7 @@ class MyDocument extends Document {
 						name="description"
 						content="See pictures from The Dumpling Gallery"
 					/>
-					<meta property="og:site_name" content="thedumplinggallery.vercel.app" />
+					<meta property="og:site_name" content="thedumplinggallery.me" />
 					<meta
 						property="og:description"
 						content="See pictures from The Dumpling Gallery."
