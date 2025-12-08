@@ -33,7 +33,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	return (
 		<>
 			<Head>
-				<title>The Dumpling Gallery</title>
+				<title>Six Seven | The Dumpling Gallery</title>
 			</Head>
 
 			<main className="mx-auto max-w-[1960px] p-4">
@@ -58,7 +58,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
 						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery:<br />Culture Crawl Day 5
+							The Dumpling Gallery:<br />Six Seven <em>(Private)</em>
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">

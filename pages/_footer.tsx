@@ -23,7 +23,7 @@ function Footer() {
 				</a>
 				{" | "}
 				<a
-					href="https://github.com/AKoreanDumpling/the-dumpling-gallery/blob/main/LICENSE"
+					href="/LICENSE"
 					target="_blank"
 					className="font-semibold hover:text-white"
 					rel="noreferrer"

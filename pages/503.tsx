@@ -19,7 +19,7 @@ function Custom503() {
 							<span className="flex max-h-full max-w-full items-center justify-center">
 								<Bridge />
 							</span>
-							<span className="absolute left-0 right-0 bottom-0 h-[250px] bg-gradient-to-b from-black/0 via-black to-black"></span>
+							<span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
 						<h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest">
 							Server Error 503
