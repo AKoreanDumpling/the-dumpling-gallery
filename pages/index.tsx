@@ -14,6 +14,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AnimatePresence } from "framer-motion";
 import Footer from "./_footer";
+import Admonition from '@yozora/react-admonition';
 
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
@@ -64,7 +65,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
 							View and download full resolution photos! Images are typically removed after 72 hours - save the ones you like!
 						</p>
-
 						<a
 							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
 							href="#credits"
@@ -81,7 +81,14 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						>
 							Code on GitHub
 						</a>
+
 					</div>
+					<Admonition
+						keyword="info"
+						title={<span><strong>INFO</strong></span>}
+					>
+						The Camera date was unfourtunately not set correctly, so the photos' timestamps may not reflect the actual time they were taken. I have tried to correct this where possible.
+					</Admonition>
 					{images.map(({ id, public_id, format, blurDataUrl }) => (
 						<Link
 							key={id}
