@@ -5,12 +5,20 @@ function Footer() {
 			<h1 className="mt-6 mb-2 text-base font-bold uppercase tracking-widest" id="credits"> Credit:</h1>
 			<div className="mt-4">
 				<a
-					href="https://twitter.com/@AKoreanDumpling"
+					href="https://instagram.com/AKoreanDumpling"
 					target="_blank"
 					className="pointer mt-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
 					rel="noreferrer"
 				>
 					Nathan Mah
+				</a>
+<a
+					href="https://www.instagram.com/ludwiglilili"
+					target="_blank"
+					className="pointer mt-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
+					rel="noreferrer"
+				>
+					Ludwig Li
 				</a>
 			</div>
 			<div className="mt-4">
