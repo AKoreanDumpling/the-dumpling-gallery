@@ -98,15 +98,15 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							View and download full resolution photos! Images are typically removed after 72 hours - save the ones you like!
 						</p>
 						<a
-							className="cursor-pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
+							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
 							href="#credits"
 							rel="noreferrer"
 						>
 							Go to Photo Credits (special thanks to Ludwig)
 						</a>
-
+						
 						<a
-							className="cursor-pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
+							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
 							href="https://github.com/akoreandumpling/the-dumpling-gallery"
 							target="_blank"
 							rel="noreferrer"
@@ -115,9 +115,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						</a>
 						<a
 							onClick={openChangelog}
-							className="cursor-pointer z-10 mt-0 rounded-lg border border-white bg-black px-3 py-2 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
-							target="_blank"
-							rel="noreferrer"
+							className="pointer z-10 mt-0 rounded-lg border border-white bg-black px-3 py-2 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
 						>
 							What's New
 						</a>

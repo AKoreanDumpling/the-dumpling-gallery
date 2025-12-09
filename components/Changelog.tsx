@@ -9,31 +9,21 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
 	{
-		version: "0.6.1",
-		date: "2025-01-09",
+		version: "1.2.0",
+		date: "2024-01-15",
 		changes: [
-			"Added this changelog!",
-			"Added admonition support",
-			"Made loading dialogs"
+			"Added loading overlay for gallery and modal",
+			"Improved image loading performance",
+			"Added changelog popup",
 		],
 	},
 	{
-		version: "0.6.0",
-		date: "2025-12-07",
+		version: "1.1.0",
+		date: "2024-01-10",
 		changes: [
-			"Major release!!!",
-			"Redesigned UI with NEW DOMAIN!",
-			"Added resizing for different viewports",
-			"Improved performance"
-		],
-	},
-	{
-		version: "0.5.3",
-		date: "2025-12-05",
-		changes: [
-			"Added error pages",
-			"Improved mobile navigation",
-			"Fixed bugs with open in new tab",
+			"Added download button for full resolution images",
+			"Added Twitter share functionality",
+			"Improved mobile swipe navigation",
 		],
 	},
 	{
@@ -89,7 +79,7 @@ export default function Changelog({
 							<Dialog.Title className="text-xl font-semibold text-white">
 								What's New
 							</Dialog.Title>
-
+						
 						</div>
 
 						{/* Content */}
@@ -97,8 +87,9 @@ export default function Changelog({
 							{changelogData.map((entry, index) => (
 								<div
 									key={entry.version}
-									className={`${index !== 0 ? "mt-6 pt-6 border-t border-white/10" : ""
-										}`}
+									className={`${
+										index !== 0 ? "mt-6 pt-6 border-t border-white/10" : ""
+									}`}
 								>
 									<div className="flex items-center gap-3 mb-3">
 										<span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white">
