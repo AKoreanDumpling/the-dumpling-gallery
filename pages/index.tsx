@@ -59,7 +59,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
 						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery:<br />Culture Crawl Day 5
+							The Dumpling Gallery:<br />Snipes Collection
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
@@ -71,7 +71,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 							rel="noreferrer"
 						>
-							Go to Photo Credits
+							Go to Photo Credits (special thanks to Ludwig)
 						</a>
 						<a
 							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
