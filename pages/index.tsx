@@ -87,7 +87,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						keyword="info"
 						title={<span><strong>INFO</strong></span>}
 					>
-						The Camera date was unfourtunately not set correctly, so the photos' timestamps may not reflect the actual time they were taken. I have tried to correct this where possible.
+						This collection can grow! Send me your best snipes for them to be featured here!
 					</Admonition>
 					{images.map(({ id, public_id, format, blurDataUrl }) => (
 						<Link
