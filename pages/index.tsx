@@ -3,16 +3,18 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Bridge from "../components/Icons/Bridge";
 import Modal from "../components/Modal";
+import Changelog from "../components/Changelog";
 import cloudinary from "../utils/cloudinary";
 import getBase64ImageUrl from "../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../utils/types";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
+import { useChangelog } from "../utils/useChangelog";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Footer from "./_footer";
 import Admonition from '@yozora/react-admonition';
 
@@ -20,8 +22,16 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
+	const [loadedCount, setLoadedCount] = useState(0);
+	const { isOpen: isChangelogOpen, openChangelog, closeChangelog } = useChangelog();
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
+
+	const handleImageLoad = () => {
+		setLoadedCount((prev) => prev + 1);
+	};
+
+	const allImagesLoaded = images.length > 0 && loadedCount >= images.length;
 
 	useEffect(() => {
 		// This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
@@ -36,6 +46,28 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 			<Head>
 				<title>The Dumpling Gallery</title>
 			</Head>
+
+			{/* Changelog Modal */}
+			<Changelog isOpen={isChangelogOpen} onClose={closeChangelog} />
+
+			{/* Loading Overlay */}
+			<AnimatePresence>
+				{!allImagesLoaded && (
+					<motion.div
+						initial={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+						className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
+					>
+						<div className="flex flex-col items-center gap-4">
+							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+							<p className="text-white/75 text-sm">
+								Loading The Dumpling Gallery... ({loadedCount}/{images.length})
+							</p>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 
 			<main className="mx-auto max-w-[1960px] p-4">
 
@@ -68,11 +100,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<a
 							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
 							href="#credits"
-
 							rel="noreferrer"
 						>
 							Go to Photo Credits (special thanks to Ludwig)
 						</a>
+						
 						<a
 							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
 							href="https://github.com/akoreandumpling/the-dumpling-gallery"
@@ -81,7 +113,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						>
 							Code on GitHub
 						</a>
-
+						<a
+							onClick={openChangelog}
+							className="pointer z-10 mt-0 rounded-lg border border-white bg-black px-3 py-2 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
+						>
+							What's New
+						</a>
 					</div>
 					<Admonition
 						keyword="info"
@@ -107,10 +144,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 								src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
 								width={720}
 								height={480}
+								loading="eager"
 								sizes="(max-width: 640px) 100vw,
 				  (max-width: 1280px) 50vw,
 				  (max-width: 1536px) 33vw,
 				  25vw"
+								onLoad={handleImageLoad}
 							/>
 						</Link>
 					))}

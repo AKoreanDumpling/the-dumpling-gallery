@@ -26,6 +26,7 @@ export default function SharedModal({
 	direction,
 }: SharedModalProps) {
 	const [loaded, setLoaded] = useState(false);
+	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
 
 	let filteredImages = images?.filter((img: ImageProps) =>
 		range(index - 15, index + 15).includes(img.id),
@@ -47,6 +48,15 @@ export default function SharedModal({
 
 	let currentImage = images ? images[index] : currentPhoto;
 
+	const handleThumbnailLoad = (id: number) => {
+		setThumbnailsLoaded((prev) => new Set(prev).add(id));
+	};
+
+	const allThumbnailsLoaded = !navigation || 
+		(filteredImages && filteredImages.every((img) => thumbnailsLoaded.has(img.id)));
+
+	const isFullyLoaded = loaded && allThumbnailsLoaded;
+
 	return (
 		<MotionConfig
 			transition={{
@@ -54,6 +64,23 @@ export default function SharedModal({
 				opacity: { duration: 0.2 },
 			}}
 		>
+			{/* Loading Overlay */}
+			<AnimatePresence>
+				{!isFullyLoaded && (
+					<motion.div
+						initial={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+						className="absolute inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+					>
+						<div className="flex flex-col items-center gap-4">
+							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+							<p className="text-white/75 text-sm">Loading carousel...</p>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+
 			<div
 				className="relative z-50 flex aspect-[3/2] w-full max-w-7xl items-center wide:h-full xl:taller-than-854:h-auto pointer-events-auto"
 				{...handlers}
@@ -75,6 +102,7 @@ export default function SharedModal({
 									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 										}/image/upload/c_scale,${navigation ? "w_1280" : "w_1920"}/${currentImage.public_id
 										}.${currentImage.format}`}
+
 									width={navigation ? 1280 : 1920}
 									height={navigation ? 853 : 1280}
 									priority
@@ -112,7 +140,7 @@ export default function SharedModal({
 									{index + 1 < images.length && (
 										<button
 											className="absolute right-3 top-[calc(50%-16px)] rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none"
-											style={{ transform: "translate3d(0, 0, 0)" }}
+											style={{ transform: "translate3d(index + 1)" }}
 											onClick={() => changePhotoId(index + 1)}
 										>
 											<ChevronRightIcon className="h-6 w-6" />
@@ -205,6 +233,7 @@ export default function SharedModal({
 													: "brightness-50 contrast-125 hover:brightness-75"
 													} h-full transform object-cover transition`}
 												src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_180/${public_id}.${format}`}
+												onLoad={() => handleThumbnailLoad(id)}
 											/>
 										</motion.button>
 									))}
