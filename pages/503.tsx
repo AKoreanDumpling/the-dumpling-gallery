@@ -26,7 +26,7 @@ function Custom503() {
 						</h1>
 
 						<p className="max-w-[60ch] text-white/75 sm:max-w-[40ch] mt-0 mb-0">
-							The Dumpling Gallery is undergoing maintenance and the server is unable to handle requests. Thank you for your patience.<br /><br /><em>Maintenance ends on Monday, 8th December 2025.</em>
+							The Dumpling Gallery is undergoing maintenance and the server is unable to handle requests. Thank you for your patience.<br /><br /><em>Maintenance ends on 10th December 2025.</em>
 						</p>
 						<h2 className="mt-0 mb-0 text-base font-bold uppercase tracking-wide">
 							Service Unavailable
