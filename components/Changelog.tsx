@@ -9,8 +9,15 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
 	{
+		version: "1.2.1",
+		date: "2025-12-11",
+		changes: [
+			"Emergency hotfix for loader hang"
+		],
+	},
+	{
 		version: "1.2.0",
-		date: "2024-01-15",
+		date: "2025-12-9",
 		changes: [
 			"Added loading overlay for gallery and modal",
 			"Improved image loading performance",
@@ -19,7 +26,7 @@ const changelogData: ChangelogEntry[] = [
 	},
 	{
 		version: "1.1.0",
-		date: "2024-01-10",
+		date: "2025-01-10",
 		changes: [
 			"Added download button for full resolution images",
 			"Added Twitter share functionality",
@@ -39,7 +46,7 @@ const changelogData: ChangelogEntry[] = [
 ];
 
 // Update with ver. num
-export const CURRENT_VERSION = "1.2.0";
+export const CURRENT_VERSION = "1.2.1";
 
 export default function Changelog({
 	isOpen,
@@ -79,7 +86,7 @@ export default function Changelog({
 							<Dialog.Title className="text-xl font-semibold text-white">
 								What's New
 							</Dialog.Title>
-						
+
 						</div>
 
 						{/* Content */}
@@ -87,9 +94,8 @@ export default function Changelog({
 							{changelogData.map((entry, index) => (
 								<div
 									key={entry.version}
-									className={`${
-										index !== 0 ? "mt-6 pt-6 border-t border-white/10" : ""
-									}`}
+									className={`${index !== 0 ? "mt-6 pt-6 border-t border-white/10" : ""
+										}`}
 								>
 									<div className="flex items-center gap-3 mb-3">
 										<span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white">

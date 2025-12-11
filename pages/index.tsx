@@ -31,7 +31,8 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 		setLoadedCount((prev) => prev + 1);
 	};
 
-	const allImagesLoaded = images.length > 0 && loadedCount >= images.length;
+	// Fix: Handle empty images array and avoid hanging forever
+	const allImagesLoaded = images.length === 0 || loadedCount >= images.length;
 
 	useEffect(() => {
 		// This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
@@ -62,7 +63,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<div className="flex flex-col items-center gap-4">
 							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
 							<p className="text-white/75 text-sm">
-								Loading The Dumpling Gallery... ({loadedCount}/{images.length})
+								Preparing The Dumpling Gallery... ({loadedCount}/{images.length})<br />(this may take a while the first time you visit!)
 							</p>
 						</div>
 					</motion.div>
@@ -149,7 +150,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 				  (max-width: 1280px) 50vw,
 				  (max-width: 1536px) 33vw,
 				  25vw"
-								onLoad={handleImageLoad}
+								onLoadingComplete={handleImageLoad}
 							/>
 						</Link>
 					))}

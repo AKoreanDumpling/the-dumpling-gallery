@@ -5,7 +5,7 @@ module.exports = {
 				protocol: "https",
 				hostname: "res.cloudinary.com",
 				port: "",
-				pathname: "/the-dumpling-gallery/**",
+				pathname: "/the-dumpling-cloud/**",
 				search: "",
 			},
 		],
