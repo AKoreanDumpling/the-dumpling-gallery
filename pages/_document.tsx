@@ -16,7 +16,7 @@ class MyDocument extends Document {
 						content="See pictures from The Dumpling Gallery."
 					/>
 					<meta property="og:title" content="The Dumpling Gallery" />
-					<meta name="twitter:card" content="summary_large_image" />
+					<meta name="twitter:card" content="summary" />
 					<meta name="twitter:title" content="The Dumpling Gallery" />
 					<meta
 						name="twitter:description"

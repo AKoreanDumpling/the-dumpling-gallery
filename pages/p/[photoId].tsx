@@ -18,8 +18,6 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 		<>
 			<Head>
 				<title>The Dumpling Gallery</title>
-				<meta property="og:image" content={currentPhotoUrl} />
-				<meta name="twitter:image" content={currentPhotoUrl} />
 			</Head>
 			<main className="mx-auto max-w-[1960px] p-4">
 				<Carousel currentPhoto={currentPhoto} index={index} />
