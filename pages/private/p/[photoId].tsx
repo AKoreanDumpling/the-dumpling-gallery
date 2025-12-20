@@ -1,0 +1,88 @@
+﻿import type { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import PrivateCarousel from "../../../components/PrivateCarousel";
+import cloudinary from "../../../utils/cloudinary";
+import getBase64ImageUrl from "../../../utils/generateBlurPlaceholder";
+import type { ImageProps } from "../../../utils/types";
+
+const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
+	const router = useRouter();
+	const { photoId } = router.query;
+	let index = Number(photoId);
+
+	const currentPhotoUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_2560/${currentPhoto.public_id}.${currentPhoto.format}`;
+
+	return (
+		<>
+			<Head>
+				<title>Private Photo | The Dumpling Gallery</title>
+				<meta property="og:image" content={currentPhotoUrl} />
+				<meta name="twitter:image" content={currentPhotoUrl} />
+			</Head>
+
+			{/* Private Gallery Indicator Banner */}
+			<div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 py-2 px-4 text-center text-white text-sm font-semibold shadow-lg">
+				<span className="mr-2">🔒</span>
+				Private Gallery - Authorized Access Only
+			</div>
+
+			<main className="mx-auto max-w-[1960px] p-4 pt-12">
+				<PrivateCarousel currentPhoto={currentPhoto} index={index} />
+			</main>
+		</>
+	);
+};
+
+export default PrivatePhoto;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	// Check authentication on server side
+	const authCookie = context.req.cookies.private_auth;
+
+	if (!authCookie || authCookie !== "authenticated") {
+		return {
+			redirect: {
+				destination: `/login?redirect=/private/p/${context.params.photoId}`,
+				permanent: false,
+			},
+		};
+	}
+
+	const results = await cloudinary.v2.search
+		.expression(`folder:${process.env.PRIVATE_CLOUDINARY_FOLDER}/*`)
+		.sort_by("public_id", "desc")
+		.max_results(400)
+		.execute();
+
+	let reducedResults: ImageProps[] = [];
+	let i = 0;
+	for (let result of results.resources) {
+		reducedResults.push({
+			id: i,
+			height: result.height,
+			width: result.width,
+			public_id: result.public_id,
+			format: result.format,
+		});
+		i++;
+	}
+
+	const currentPhoto = reducedResults.find(
+		(img) => img.id === Number(context.params.photoId),
+	);
+
+	if (!currentPhoto) {
+		return {
+			notFound: true,
+		};
+	}
+
+	currentPhoto.blurDataUrl = await getBase64ImageUrl(currentPhoto);
+
+	return {
+		props: {
+			currentPhoto: currentPhoto,
+		},
+	};
+};

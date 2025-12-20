@@ -9,6 +9,13 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
 	{
+		version: "1.5",
+		date: "2025-12-20",
+		changes: [
+			"NEW - Finally finished private gallery!"
+		],
+	},
+	{
 		version: "1.2.1",
 		date: "2025-12-11",
 		changes: [
@@ -46,7 +53,7 @@ const changelogData: ChangelogEntry[] = [
 ];
 
 // Update with ver. num
-export const CURRENT_VERSION = "1.2.1";
+export const CURRENT_VERSION = "1.5";
 
 export default function Changelog({
 	isOpen,
