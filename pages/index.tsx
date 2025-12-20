@@ -76,7 +76,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<Modal
 							images={images}
 							onClose={() => {
-								setLastViewedPhoto(photoId);
+								setLastViewedPhoto(Number(photoId));
 							}}
 						/>
 					)}
@@ -132,6 +132,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<Link
 							key={id}
 							href={`/?photoId=${id}`}
+
 							as={`/p/${id}`}
 							ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
 							shallow
@@ -144,6 +145,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 								placeholder="blur"
 								blurDataURL={blurDataUrl}
 								src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
+
 								width={720}
 								height={480}
 								loading="eager"

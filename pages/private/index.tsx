@@ -75,7 +75,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<PrivateModal
 							images={images}
 							onClose={() => {
-								setLastViewedPhoto(photoId);
+								setLastViewedPhoto(Number(photoId));
 							}}
 						/>
 					)}
