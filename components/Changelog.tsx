@@ -12,7 +12,7 @@ const changelogData: ChangelogEntry[] = [
 		version: "1.5",
 		date: "2025-12-20",
 		changes: [
-			"NEW - Finally finished private gallery!"
+			"NEW - Finally finished private gallery!",
 			"Got rid of thumbnails"
 		],
 	},
