@@ -9,11 +9,17 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
 	{
+		version: "1.6",
+		date: "2026-1-3",
+		changes: [
+			"Got rid of thumbnails"
+		],
+	},
+	{
 		version: "1.5",
 		date: "2025-12-20",
 		changes: [
-			"NEW - Finally finished private gallery!",
-			"Got rid of thumbnails"
+			"NEW - Finally finished private gallery!"
 		],
 	},
 	{

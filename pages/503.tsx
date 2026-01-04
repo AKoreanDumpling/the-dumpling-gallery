@@ -26,7 +26,7 @@ function Custom503() {
 						</h1>
 
 						<p className="max-w-[60ch] text-white/75 sm:max-w-[40ch] mt-0 mb-0">
-							The Dumpling Gallery is undergoing maintenance and the server is unable to handle requests. Thank you for your patience.<br /><br /><em>Maintenance ends on 10th December 2025.</em>
+							The Dumpling Gallery is undergoing maintenance (or there are no photos to display!). The server cannot handle requests at this time. If you're expecting new photos, please allow up to 48 hours for them to be uploaded.<br /><br /><em>Thank you for your patience.</em>
 						</p>
 						<h2 className="mt-0 mb-0 text-base font-bold uppercase tracking-wide">
 							Service Unavailable
@@ -37,7 +37,7 @@ function Custom503() {
 							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white"
 							rel="noreferrer"
 						>
-							Return to Main Page
+							Retry
 						</a>
 					</div>
 
