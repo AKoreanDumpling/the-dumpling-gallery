@@ -14,7 +14,6 @@ import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
 import { range } from "../utils/range";
 import type { ImageProps, SharedModalProps } from "../utils/types";
-import Twitter from "./Icons/Twitter";
 
 export default function SharedModal({
 	index,
@@ -52,7 +51,7 @@ export default function SharedModal({
 		setThumbnailsLoaded((prev) => new Set(prev).add(id));
 	};
 
-	const allThumbnailsLoaded = !navigation || 
+	const allThumbnailsLoaded = !navigation ||
 		(filteredImages && filteredImages.every((img) => thumbnailsLoaded.has(img.id)));
 
 	const isFullyLoaded = loaded && allThumbnailsLoaded;
@@ -75,7 +74,7 @@ export default function SharedModal({
 					>
 						<div className="flex flex-col items-center gap-4">
 							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
-							<p className="text-white/75 text-sm">Loading carousel...</p>
+							<p className="text-white/75 text-sm">Loading images...</p>
 						</div>
 					</motion.div>
 				)}
@@ -149,26 +148,15 @@ export default function SharedModal({
 								</>
 							)}
 							<div className="absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
-								{navigation ? (
-									<a
-										href={`/p/${index}`}
-										className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-										title="Open fullsize version"
-										rel="noreferrer"
-									>
-										<ArrowTopRightOnSquareIcon className="h-5 w-5" />
-									</a>
-								) : (
-									<a
-										href={`https://twitter.com/intent/tweet?text=Check%20out%20this%20pic%20from%20The%20Dumpling%20Gallery!%0A%0Ahttps://thedumplinggallery.me/p/${index}`}
-										className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-										target="_blank"
-										title="Share to Twitter"
-										rel="noreferrer"
-									>
-										<Twitter className="h-5 w-5" />
-									</a>
-								)}
+								<a
+									href={`/p/${index}`}
+									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+									title="Open fullsize version"
+									rel="noreferrer"
+								>
+									<ArrowTopRightOnSquareIcon className="h-5 w-5" />
+								</a>
+
 								<button
 									onClick={() =>
 										downloadPhoto(
@@ -177,7 +165,7 @@ export default function SharedModal({
 										)
 									}
 									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-									title="Download fullsize version (from CDN - original resolution)"
+									title="Download"
 								>
 									<ArrowDownTrayIcon className="h-5 w-5" />
 								</button>
@@ -243,6 +231,6 @@ export default function SharedModal({
 					)}
 				</div>
 			</div>
-		</MotionConfig>
+		</MotionConfig >
 	);
 }

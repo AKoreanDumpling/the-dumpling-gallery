@@ -89,12 +89,12 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							</span>
 							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
-						<div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-red-600 px-3 py-1 text-xs font-semibold">
-							<span>🔒</span> Logged In
+						<div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-yellow-800 px-3 py-1 text-xs font-semibold">
+							<span>🔒 Private</span>
 						</div>
 
 						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
-							The Dumpling Gallery (Private):<br />True Love
+							The Dumpling Gallery:<br />[TITLE PLACEHOLDER]
 						</h1>
 
 						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
@@ -139,7 +139,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 				  (max-width: 1280px) 50vw,
 				  (max-width: 1536px) 33vw,
 				  25vw"
-								onLoadingComplete={handleImageLoad}
+								onLoad={handleImageLoad}
 							/>
 						</Link>
 					))}

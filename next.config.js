@@ -1,6 +1,7 @@
 module.exports = {
 	images: {
-		//unoptimized: true,
+		loader: 'custom',
+		loaderFile: './my/loader.js',
 		remotePatterns: [
 			{
 				protocol: "https",
