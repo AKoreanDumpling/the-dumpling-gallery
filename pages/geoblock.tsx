@@ -3,7 +3,7 @@ import Bridge from "../components/Icons/Bridge";
 import Footer from "./_footer";
 
 
-function Custom503() {
+function Geoblock() {
 	return (
 		<>
 			<Head>
@@ -26,10 +26,10 @@ function Custom503() {
 						</h1>
 
 						<p className="max-w-[60ch] text-white/75 sm:max-w-[40ch] mt-0 mb-0">
-							Thank you for visiting! Although your interest is appreciated, The Dumpling Gallery will only be available within Canada in order to minimize resource consumption. If you have a question or concern, please feel free to reach out.<br /><br /><em>This request should not be repeated.</em>
+							It looks like you're outside of Canada! Unfortunately, The Dumpling Gallery is only available within Canada, in order to minimize resource consumption, and continue to operate sustainably. If you are within Canada and feel this is a mistake, please reach out. Otherwise, thank you for visiting!<br /><br /><em>Your interest is greatly appreciated.</em>
 						</p>
 						<h2 className="mt-0 mb-0 text-base font-bold uppercase tracking-wide">
-							Region not supported
+							Service Unavailable
 						</h2>
 					</div>
 				</div>
@@ -40,4 +40,4 @@ function Custom503() {
 };
 
 
-export default Custom503;
+export default Geoblock;
