@@ -24,8 +24,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(react@18.3.1)
       '@next/codemod':
-        specifier: 16.1.1-canary.10
-        version: 16.1.1-canary.10
+        specifier: 16.1.1
+        version: 16.1.1
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.1.1(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vue-router@4.6.3(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))
@@ -515,8 +515,8 @@ packages:
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
 
-  '@next/codemod@16.1.1-canary.10':
-    resolution: {integrity: sha512-Wl90GU8z/kxolpIBgbN/05ftwi2QNaS89K2YngZ917svaPjbqhER3vKD/RC8AKL31UaLVfhNmchrwc8L9BkUdA==}
+  '@next/codemod@16.1.1':
+    resolution: {integrity: sha512-N9T45VYt6wVH/MN09RRMXQjBuDKhk+ziS2adUBsLZ1lOHE7UH35+bvtkGjtoS99YdKUbbOCkJ0P0X+nMegXLNA==}
     hasBin: true
 
   '@next/env@16.1.1':
@@ -3125,7 +3125,7 @@ snapshots:
       '@motionone/easing': 10.18.0
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
-      tslib: 2.4.0
+      tslib: 2.8.1
 
   '@motionone/dom@10.18.0':
     dependencies:
@@ -3139,13 +3139,13 @@ snapshots:
   '@motionone/easing@10.18.0':
     dependencies:
       '@motionone/utils': 10.18.0
-      tslib: 2.4.0
+      tslib: 2.8.1
 
   '@motionone/generators@10.18.0':
     dependencies:
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
-      tslib: 2.4.0
+      tslib: 2.8.1
 
   '@motionone/types@10.17.1': {}
 
@@ -3153,7 +3153,7 @@ snapshots:
     dependencies:
       '@motionone/types': 10.17.1
       hey-listen: 1.0.8
-      tslib: 2.4.0
+      tslib: 2.8.1
 
   '@napi-rs/wasm-runtime@1.1.1':
     dependencies:
@@ -3162,7 +3162,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@next/codemod@16.1.1-canary.10':
+  '@next/codemod@16.1.1':
     dependencies:
       cheerio: 1.0.0-rc.9
       commander: 12.1.0
