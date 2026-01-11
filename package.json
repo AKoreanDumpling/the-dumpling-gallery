@@ -16,7 +16,7 @@
 		"canvas-confetti": "^1.9.4",
 		"cloudinary": "^1.41.3",
 		"cookie": "^1.1.1",
-		"framer-motion": "^7.10.3",
+		"framer-motion": "^12.25.0",
 		"imagemin": "^9.0.1",
 		"imagemin-jpegtran": "^7.0.0",
 		"knip": "^5.80.2",
