@@ -1,5 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import confetti from "canvas-confetti";
 
 interface ChangelogEntry {
 	version: string;
@@ -8,6 +10,18 @@ interface ChangelogEntry {
 }
 
 const changelogData: ChangelogEntry[] = [
+	{
+		version: "2.0",
+		date: "2026-1-11",
+		changes: [
+			"Updated changelog",
+			"Completely redesigned animations website wide",
+			"Added new loader",
+			"Migrated from middleware to proxy",
+			"Updated error page designs",
+			"Fixed vertical image bug"
+		],
+	},
 	{
 		version: "1.6",
 		date: "2026-1-3",
@@ -19,7 +33,7 @@ const changelogData: ChangelogEntry[] = [
 		version: "1.5",
 		date: "2025-12-20",
 		changes: [
-			"NEW - Finally finished private gallery!"
+			"Finally finished private gallery!"
 		],
 	},
 	{
@@ -60,7 +74,40 @@ const changelogData: ChangelogEntry[] = [
 ];
 
 // Update with ver. num
-export const CURRENT_VERSION = "1.5";
+export const CURRENT_VERSION = "1.6";
+
+// Confetti function that shoots from both sides
+const fireConfetti = () => {
+	const duration = 800;
+	const end = Date.now() + duration;
+	const colors = ["#ff0080", "#ff8c00", "#40e0d0", "#ff1493", "#00ff7f", "#ffd700"];
+
+	(function frame() {
+		// Left side confetti
+		confetti({
+			particleCount: 3,
+			angle: 60,
+			spread: 55,
+			origin: { x: 0, y: 0.6 },
+			colors: colors,
+			zIndex: 9999,
+		});
+
+		// Right side confetti
+		confetti({
+			particleCount: 3,
+			angle: 120,
+			spread: 55,
+			origin: { x: 1, y: 0.6 },
+			colors: colors,
+			zIndex: 9999,
+		});
+
+		if (Date.now() < end) {
+			requestAnimationFrame(frame);
+		}
+	})();
+};
 
 export default function Changelog({
 	isOpen,
@@ -69,6 +116,13 @@ export default function Changelog({
 	isOpen: boolean;
 	onClose: () => void;
 }) {
+	// Fire confetti when modal opens
+	useEffect(() => {
+		if (isOpen) {
+			fireConfetti();
+		}
+	}, [isOpen]);
+
 	return (
 		<AnimatePresence>
 			{isOpen && (

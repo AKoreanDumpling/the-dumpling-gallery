@@ -26,14 +26,15 @@ export default function SharedModal({
 }: SharedModalProps) {
 	const [loaded, setLoaded] = useState(false);
 	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
+	const [isClosing, setIsClosing] = useState(false);
 
-	let filteredImages = images?.filter((img: ImageProps) =>
+	const filteredImages: ImageProps[] | undefined = images?.filter((img: ImageProps) =>
 		range(index - 15, index + 15).includes(img.id),
 	);
 
 	const handlers = useSwipeable({
 		onSwipedLeft: () => {
-			if (index < images?.length - 1) {
+			if (index < (images?.length ?? 0) - 1) {
 				changePhotoId(index + 1);
 			}
 		},
@@ -45,7 +46,7 @@ export default function SharedModal({
 		trackMouse: true,
 	});
 
-	let currentImage = images ? images[index] : currentPhoto;
+	const currentImage = images ? images[index] : currentPhoto;
 
 	const handleThumbnailLoad = (id: number) => {
 		setThumbnailsLoaded((prev) => new Set(prev).add(id));
@@ -56,37 +57,79 @@ export default function SharedModal({
 
 	const isFullyLoaded = loaded && allThumbnailsLoaded;
 
+	const imagesLength = images?.length ?? 0;
+
+	const handleClose = () => {
+		setIsClosing(true);
+		closeModal();
+	};
+
 	return (
 		<MotionConfig
-			transition={{
-				x: { type: "spring", stiffness: 300, damping: 30 },
-				opacity: { duration: 0.2 },
-			}}
+			transition={
+				isClosing
+					? { duration: 0 }
+					: {
+						x: { type: "spring", stiffness: 300, damping: 30 },
+						opacity: { duration: 0.2 },
+					}
+			}
 		>
-			{/* Loading Overlay */}
-			<AnimatePresence>
-				{!isFullyLoaded && (
-					<motion.div
-						initial={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-						className="absolute inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm"
-					>
-						<div className="flex flex-col items-center gap-4">
-							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
-							<p className="text-white/75 text-sm">Loading images...</p>
-						</div>
-					</motion.div>
-				)}
-			</AnimatePresence>
 
-			<div
-				className="relative z-50 flex aspect-[3/2] w-full max-w-7xl items-center wide:h-full xl:taller-than-854:h-auto pointer-events-auto"
-				{...handlers}
-			>
-				{/* Main image */}
-				<div className="w-full overflow-hidden">
-					<div className="relative flex aspect-[3/2] items-center justify-center">
+			{/* Full screen container */}
+			<div className="fixed inset-0 z-50 flex flex-col pointer-events-auto" {...handlers}>
+				{/* Top bar with buttons */}
+				<div className="flex-shrink-0 flex items-center justify-between p-3 z-50">
+					<button
+						onClick={handleClose}
+						className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+					>
+						{navigation ? (
+							<XMarkIcon className="h-5 w-5" />
+						) : (
+							<ArrowUturnLeftIcon className="h-5 w-5" />
+						)}
+					</button>
+					<div className="flex items-center gap-2">
+						<a
+							href={`/p/${index}`}
+							className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+							title="Open fullsize version"
+							rel="noreferrer"
+						>
+							<ArrowTopRightOnSquareIcon className="h-5 w-5" />
+						</a>
+						<button
+							onClick={() =>
+								downloadPhoto(
+									`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${currentImage?.public_id}.${currentImage?.format}`,
+									`${index}.jpg`,
+								)
+							}
+							className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+							title="Download"
+						>
+							<ArrowDownTrayIcon className="h-5 w-5" />
+						</button>
+					</div>
+				</div>
+
+				{/* Main content area with image and side buttons */}
+				<div className="flex-1 flex items-center justify-center relative min-h-0 px-3">
+					{/* Left navigation button */}
+					{navigation && index > 0 && (
+						<button
+							className="flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none mr-2"
+							onClick={() => changePhotoId(index - 1)}
+						>
+							<ChevronLeftIcon className="h-6 w-6" />
+						</button>
+					)}
+					{/* Spacer when no left button */}
+					{navigation && index === 0 && <div className="flex-shrink-0 w-14 mr-2" />}
+
+					{/* Image container */}
+					<div className="flex-1 relative flex items-center justify-center min-w-0 min-h-0 h-full">
 						<AnimatePresence initial={false} custom={direction}>
 							<motion.div
 								key={index}
@@ -95,142 +138,84 @@ export default function SharedModal({
 								initial="enter"
 								animate="center"
 								exit="exit"
-								className="absolute"
+								className="absolute inset-0 flex items-center justify-center"
 							>
-								<Image
-									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-										}/image/upload/c_scale,${navigation ? "w_1280" : "w_1920"}/${currentImage.public_id
-										}.${currentImage.format}`}
-
-									width={navigation ? 1280 : 1920}
-									height={navigation ? 853 : 1280}
-									priority
-									alt="Image"
-									onLoad={() => setLoaded(true)}
-									style={{
-										width: 'auto',
-										height: 'auto',
-										maxWidth: 'calc(100vw - 128px)',
-										maxHeight: 'calc(100vh - 128px)',
-										objectFit: 'contain',
-									}}
-								/>
+								{currentImage && (
+									<Image
+										src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+											}/image/upload/c_scale,w_1920/${currentImage.public_id
+											}.${currentImage.format}`}
+										width={Number(currentImage.width) || 1920}
+										height={Number(currentImage.height) || 1280}
+										priority
+										alt="Image"
+										onLoad={() => setLoaded(true)}
+										className="max-w-full max-h-full w-auto h-auto object-contain"
+									/>
+								)}
 							</motion.div>
 						</AnimatePresence>
 					</div>
+
+					{/* Right navigation button */}
+					{navigation && index + 1 < imagesLength && (
+						<button
+							className="flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none ml-2"
+							onClick={() => changePhotoId(index + 1)}
+						>
+							<ChevronRightIcon className="h-6 w-6" />
+						</button>
+					)}
+					{/* Spacer when no right button */}
+					{navigation && index + 1 >= imagesLength && <div className="flex-shrink-0 w-14 ml-2" />}
 				</div>
 
-				{/* Buttons + bottom nav bar */}
-				<div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-					{/* Buttons */}
-					{loaded && (
-						<div className="relative aspect-[3/2] max-h-full w-full">
-							{navigation && (
-								<>
-									{index > 0 && (
-										<button
-											className="absolute left-3 top-[calc(50%-16px)] rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none"
-											style={{ transform: "translate3d(0, 0, 0)" }}
-											onClick={() => changePhotoId(index - 1)}
-										>
-											<ChevronLeftIcon className="h-6 w-6" />
-										</button>
-									)}
-									{index + 1 < images.length && (
-										<button
-											className="absolute right-3 top-[calc(50%-16px)] rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none"
-											style={{ transform: "translate3d(index + 1)" }}
-											onClick={() => changePhotoId(index + 1)}
-										>
-											<ChevronRightIcon className="h-6 w-6" />
-										</button>
-									)}
-								</>
-							)}
-							<div className="absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
-								<a
-									href={`/p/${index}`}
-									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-									title="Open fullsize version"
-									rel="noreferrer"
-								>
-									<ArrowTopRightOnSquareIcon className="h-5 w-5" />
-								</a>
-
-								<button
-									onClick={() =>
-										downloadPhoto(
-											`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${currentImage.public_id}.${currentImage.format}`,
-											`${index}.jpg`,
-										)
-									}
-									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-									title="Download"
-								>
-									<ArrowDownTrayIcon className="h-5 w-5" />
-								</button>
-							</div>
-							<div className="absolute top-0 left-0 flex items-center gap-2 p-3 text-white">
-								<button
-									onClick={() => closeModal()}
-									className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-								>
-									{navigation ? (
-										<XMarkIcon className="h-5 w-5" />
-									) : (
-										<ArrowUturnLeftIcon className="h-5 w-5" />
-									)}
-								</button>
-							</div>
-						</div>
-					)}
-					{/* Bottom Nav bar */}
-					{navigation && (
-						<div className="fixed inset-x-0 bottom-0 z-40 overflow-hidden bg-gradient-to-b from-black/0 to-black/60">
-							<motion.div
-								initial={false}
-								className="mx-auto mt-6 mb-6 flex aspect-[3/2] h-14"
-							>
-								<AnimatePresence initial={false}>
-									{filteredImages.map(({ public_id, format, id }) => (
-										<motion.button
-											initial={{
-												width: "0%",
-												x: `${Math.max((index - 1) * -100, 15 * -100)}%`,
-											}}
-											animate={{
-												scale: id === index ? 1.25 : 1,
-												width: "100%",
-												x: `${Math.max(index * -100, 15 * -100)}%`,
-											}}
-											exit={{ width: "0%" }}
-											onClick={() => changePhotoId(id)}
-											key={id}
-											className={`${id === index
-												? "z-20 rounded-md shadow shadow-black/50"
-												: "z-10"
-												} ${id === 0 ? "rounded-l-md" : ""} ${id === images.length - 1 ? "rounded-r-md" : ""
-												} relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
-										>
-											<Image
-												alt="small photos on the bottom"
-												width={180}
-												height={120}
-												className={`${id === index
-													? "brightness-110 hover:brightness-110"
-													: "brightness-50 contrast-125 hover:brightness-75"
-													} h-full transform object-cover transition`}
-												src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_180/${public_id}.${format}`}
-												onLoad={() => handleThumbnailLoad(id)}
-											/>
-										</motion.button>
-									))}
-								</AnimatePresence>
-							</motion.div>
-						</div>
-					)}
-				</div>
+				{/* Bottom Nav bar */}
+				{navigation && filteredImages && (
+					<div className="flex-shrink-0 z-40 overflow-hidden bg-gradient-to-b from-black/0 to-black/60">
+						<motion.div
+							initial={false}
+							className="mx-auto mt-6 mb-6 flex aspect-[3/2] h-14"
+						>
+							<AnimatePresence initial={false}>
+								{filteredImages.map((image: ImageProps) => (
+									<motion.button
+										initial={{
+											width: "0%",
+											x: `${Math.max((index - 1) * -100, 15 * -100)}%`,
+										}}
+										animate={{
+											scale: image.id === index ? 1.25 : 1,
+											width: "100%",
+											x: `${Math.max(index * -100, 15 * -100)}%`,
+										}}
+										exit={{ width: "0%" }}
+										onClick={() => changePhotoId(image.id)}
+										key={image.id}
+										className={`${image.id === index
+											? "z-20 rounded-md shadow shadow-black/50"
+											: "z-10"
+											} ${image.id === 0 ? "rounded-l-md" : ""} ${image.id === imagesLength - 1 ? "rounded-r-md" : ""
+											} relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
+									>
+										<Image
+											alt="small photos on the bottom"
+											width={180}
+											height={120}
+											className={`${image.id === index
+												? "brightness-110 hover:brightness-110"
+												: "brightness-50 contrast-125 hover:brightness-75"
+												} h-full transform object-cover transition`}
+											src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_180/${image.public_id}.${image.format}`}
+											onLoad={() => handleThumbnailLoad(image.id)}
+										/>
+									</motion.button>
+								))}
+							</AnimatePresence>
+						</motion.div>
+					</div>
+				)}
 			</div>
-		</MotionConfig >
+		</MotionConfig>
 	);
 }

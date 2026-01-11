@@ -13,10 +13,11 @@ function Custom404() {
 
 				<div className="display-grid place-items-center">
 
-					<div className="after:content relative pb-4 pt-2 m-16 h-fit max-w-fit w-fit mb-5 flex flex-col items-center justify-end gap-4 rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight">
+					<div className="after:content relative pb-4 pt-0 m-16 h-fit max-w-fit w-fit mb-5 flex flex-col items-center justify-end gap-4 rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight">
 						<h1 className="mt-10 mb-2 text-base font-bold uppercase tracking-widest">
 							The Dumpling Gallery License
 						</h1>
+						<br />
 						<pre className="text-pretty text-left">
 							Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 							Public License

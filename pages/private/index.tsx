@@ -13,6 +13,45 @@ import { usePrivateLastViewedPhoto } from "../../utils/usePrivateLastViewedPhoto
 import { AnimatePresence, motion } from "framer-motion";
 import Footer from "../_footer";
 
+// Animation variants
+const fadeInUp = {
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0 }
+};
+
+const staggerContainer = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.1,
+			delayChildren: 0.2
+		}
+	}
+};
+
+const buttonVariants = {
+	initial: { scale: 1 },
+	hover: {
+		scale: 1.05,
+		transition: { type: "spring", stiffness: 400, damping: 10 }
+	},
+	tap: { scale: 0.95 }
+};
+
+const imageCardVariants = {
+	hidden: { opacity: 0, y: 30 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.5, ease: "easeOut" }
+	},
+	hover: {
+		y: -8,
+		transition: { type: "spring", stiffness: 300, damping: 20 }
+	}
+};
+
 const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
@@ -51,23 +90,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 
 			{/* Loading Overlay */}
-			<AnimatePresence>
-				{!allImagesLoaded && (
-					<motion.div
-						initial={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-						className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
-					>
-						<div className="flex flex-col items-center gap-4">
-							<div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
-							<p className="text-white/75 text-sm">
-								Preparing The Dumpling Gallery (Private)... ({loadedCount}/{images.length})<br />(this may take a while the first time you visit!)
-							</p>
-						</div>
-					</motion.div>
-				)}
-			</AnimatePresence>
+
 
 			<main className="mx-auto max-w-[1960px] p-4">
 				<AnimatePresence mode="wait">
@@ -82,66 +105,110 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 				</AnimatePresence>
 
 				<div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-					<div className="after:content relative mb-5 flex max-w-full h-[629px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-purple-900/50 to-pink-900/50 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0 border border-purple-500/30">
-						<div className="absolute inset-0 flex items-center justify-center opacity-20">
+					<motion.div
+						className="after:content relative mb-5 flex max-w-full h-[629px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-purple-900/50 to-pink-900/50 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0 border border-purple-500/30"
+						initial="hidden"
+						animate="visible"
+						variants={staggerContainer}
+					>
+						<motion.div
+							className="absolute inset-0 flex items-center justify-center opacity-20"
+							initial={{ opacity: 0, scale: 1.1 }}
+							animate={{ opacity: 0.2, scale: 1 }}
+							transition={{ duration: 1.2, ease: "easeOut" }}
+						>
 							<span className="flex max-h-full max-w-full items-center justify-center">
 								<Bridge />
 							</span>
 							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
-						</div>
-						<div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-yellow-800 px-3 py-1 text-xs font-semibold">
-							<span>🔒 Private</span>
-						</div>
+						</motion.div>
 
-						<h1 className="mt-8 mb-2 text-base font-bold uppercase tracking-widest">
+						<motion.div
+							className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-yellow-800 px-3 py-1 text-xs font-semibold"
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+						>
+							<motion.span
+								animate={{ scale: [1, 1.1, 1] }}
+								transition={{ duration: 2, repeat: Infinity }}
+							>
+								🔒 Private
+							</motion.span>
+						</motion.div>
+
+						<motion.h1
+							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
+							variants={fadeInUp}
+						>
 							The Dumpling Gallery:<br />[TITLE PLACEHOLDER]
-						</h1>
+						</motion.h1>
 
-						<p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
+						<motion.p
+							className="max-w-[40ch] text-white/75 sm:max-w-[32ch]"
+							variants={fadeInUp}
+						>
 							View and download full resolution photos! Images are typically removed after 72 hours - save the ones you like!
-						</p>
-						<a
-							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white md:mt-4"
+						</motion.p>
+
+						<motion.a
+							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors md:mt-4 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
 							href="#credits"
 							rel="noreferrer"
+							variants={fadeInUp}
+							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
+							whileTap={{ scale: 0.95 }}
 						>
 							Go to Photo Credits
-						</a>
-						<button
+						</motion.a>
+
+						<motion.button
 							onClick={handleLogout}
-							className="pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-red-600"
+							className="pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+							variants={fadeInUp}
+							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(239,68,68,0.5)" }}
+							whileTap={{ scale: 0.95 }}
 						>
 							Log Out
-						</button>
+						</motion.button>
 
-					</div>
+					</motion.div>
 
-					{images.map(({ id, public_id, format, blurDataUrl }) => (
-						<Link
+					{images.map(({ id, public_id, format, blurDataUrl }, index) => (
+						<motion.div
 							key={id}
-							href={`/private?photoId=${id}`}
-							as={`/private/p/${id}`}
-							ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
-							shallow
-							className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+							initial="hidden"
+							animate="visible"
+							whileHover="hover"
+							variants={imageCardVariants}
+							transition={{ delay: Math.min(index * 0.05, 0.5) }}
+							className="mb-5"
 						>
-							<Image
-								alt="Private Photo"
-								className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
-								style={{ transform: "translate3d(0, 0, 0)" }}
-								placeholder="blur"
-								blurDataURL={blurDataUrl}
-								src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
-								width={720}
-								height={480}
-								loading="eager"
-								sizes="(max-width: 640px) 100vw,
-				  (max-width: 1280px) 50vw,
-				  (max-width: 1536px) 33vw,
-				  25vw"
-								onLoad={handleImageLoad}
-							/>
-						</Link>
+							<Link
+								href={`/private?photoId=${id}`}
+								as={`/private/p/${id}`}
+								ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
+								shallow
+								className="after:content group relative block w-full cursor-hand after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+							>
+								<Image
+									alt="Private Photo"
+									className="transform rounded-lg brightness-90 transition-all duration-300 will-change-auto group-hover:brightness-110 group-hover:shadow-xl"
+									style={{ transform: "translate3d(0, 0, 0)" }}
+									placeholder="blur"
+									blurDataURL={blurDataUrl}
+									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
+									width={720}
+									height={480}
+									loading="eager"
+									sizes="(max-width: 640px) 100vw,
+					  (max-width: 1280px) 50vw,
+					  (max-width: 1536px) 33vw,
+					  25vw"
+									onLoad={handleImageLoad}
+								/>
+							</Link>
+						</motion.div>
 					))}
 				</div>
 			</main>
