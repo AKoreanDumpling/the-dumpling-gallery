@@ -80,26 +80,25 @@ export const CURRENT_VERSION = "1.6";
 const fireConfetti = () => {
 	const duration = 800;
 	const end = Date.now() + duration;
-	const colors = ["#ff0080", "#ff8c00", "#40e0d0", "#ff1493", "#00ff7f", "#ffd700"];
 
 	(function frame() {
 		// Left side confetti
 		confetti({
-			particleCount: 3,
+			particleCount: 1,
 			angle: 60,
 			spread: 55,
 			origin: { x: 0, y: 0.6 },
-			colors: colors,
+			colors: ["#7c3aed"],
 			zIndex: 9999,
 		});
 
 		// Right side confetti
 		confetti({
-			particleCount: 3,
+			particleCount: 1,
 			angle: 120,
 			spread: 55,
 			origin: { x: 1, y: 0.6 },
-			colors: colors,
+			colors: ["#ec4899"],
 			zIndex: 9999,
 		});
 

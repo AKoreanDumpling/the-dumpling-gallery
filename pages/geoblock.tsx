@@ -1,6 +1,18 @@
 ﻿import Head from "next/head";
+import { motion } from "framer-motion";
 import Bridge from "../components/Icons/Bridge";
 import Footer from "./_footer";
+
+const staggerContainer = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.15,
+			delayChildren: 0.2
+		}
+	}
+};
 
 function Geoblock() {
 	return (
@@ -30,6 +42,7 @@ function Geoblock() {
 							Service Unavailable
 						</h2>
 					</div>
+				</div>
 			</main >
 			< Footer />
 		</>
