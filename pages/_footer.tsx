@@ -23,13 +23,13 @@ function Footer() {
 				</a>
 				{" | "}
 				<a
-					href="/LICENSE"
-					target="_blank"
+					href="/license"
 					className="font-semibold hover:text-white"
 					rel="noreferrer"
 				>
 					View license
 				</a>
+
 			</div>
 		</footer >
 	)
