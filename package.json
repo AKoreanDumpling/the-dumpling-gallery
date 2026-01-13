@@ -27,6 +27,7 @@
 		"react-use-keypress": "^1.4.0"
 	},
 	"devDependencies": {
+		"@types/imagemin": "^9.0.1",
 		"@types/node": "25.0.6",
 		"@types/react": "18.2.8",
 		"autoprefixer": "^10.4.23",

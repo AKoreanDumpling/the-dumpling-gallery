@@ -23,6 +23,7 @@ export default function SharedModal({
 	navigation,
 	currentPhoto,
 	direction,
+	basePath = "",
 }: SharedModalProps) {
 	const [loaded, setLoaded] = useState(false);
 	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
@@ -91,14 +92,16 @@ export default function SharedModal({
 						)}
 					</button>
 					<div className="flex items-center gap-2">
-						<a
-							href={`/p/${index}`}
-							className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-							title="Open fullsize version"
-							rel="noreferrer"
-						>
-							<ArrowTopRightOnSquareIcon className="h-5 w-5" />
-						</a>
+						{navigation && (
+							<a
+								href={`${basePath}/p/${index}`}
+								className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+								title="Open"
+								rel="noreferrer"
+							>
+								<ArrowTopRightOnSquareIcon className="h-5 w-5" />
+							</a>
+						)}
 						<button
 							onClick={() =>
 								downloadPhoto(

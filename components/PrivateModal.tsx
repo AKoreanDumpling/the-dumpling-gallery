@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import useKeypress from "react-use-keypress";
@@ -21,6 +22,8 @@ export default function PrivateModal({
 
 	const [direction, setDirection] = useState(0);
 	const [curIndex, setCurIndex] = useState(index);
+
+	const currentImage = images[curIndex];
 
 	function handleClose() {
 		router.push("/private", undefined, { shallow: true });
@@ -65,22 +68,60 @@ export default function PrivateModal({
 			initialFocus={overlayRef}
 			className="fixed inset-0 z-10 flex items-center justify-center"
 		>
-			<Dialog.Overlay
+			<motion.div
 				ref={overlayRef}
-				as={motion.div}
 				key="backdrop"
-				className="fixed inset-0 z-30 bg-black/70 backdrop-blur-2xl"
+				className="fixed inset-0 z-30 flex items-center justify-center"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-			/>
-			<SharedModal
-				index={curIndex}
-				direction={direction}
-				images={images}
-				changePhotoId={changePhotoId}
-				closeModal={handleClose}
-				navigation={true}
-			/>
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				{/* Blurred background image */}
+				<div className="absolute inset-0 -z-10 overflow-hidden bg-black">
+					<AnimatePresence mode="sync">
+						{currentImage && (
+							<motion.div
+								key={currentImage.public_id}
+								className="absolute inset-[-10%]"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.5 }}
+							>
+								<Image
+									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_32/${currentImage.public_id}.${currentImage.format}`}
+									alt=""
+									fill
+									className="object-cover blur-3xl scale-125 brightness-50"
+									priority
+								/>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
+				{/* Dark overlay for better contrast */}
+				<div className="absolute inset-0 bg-black/40 -z-10" />
+
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+					className="relative z-50 flex h-full w-full items-center justify-center pointer-events-none"
+					onClick={(e) => e.stopPropagation()}
+				>
+					<SharedModal
+						index={curIndex}
+						direction={direction}
+						images={images}
+						changePhotoId={changePhotoId}
+						closeModal={handleClose}
+						navigation={true}
+						basePath="/private"
+					/>
+				</motion.div>
+			</motion.div>
 		</Dialog>
 	);
 }

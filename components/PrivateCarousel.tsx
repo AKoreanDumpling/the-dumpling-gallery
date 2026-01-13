@@ -1,49 +1,52 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import Image from "next/image";
 import useKeypress from "react-use-keypress";
 import type { ImageProps } from "../utils/types";
+import { usePrivateLastViewedPhoto } from "../utils/usePrivateLastViewedPhoto";
 import SharedModal from "./SharedModal";
 
 export default function PrivateCarousel({
-	currentPhoto,
 	index,
+	currentPhoto,
 }: {
-	currentPhoto: ImageProps;
 	index: number;
+	currentPhoto: ImageProps;
 }) {
-	const router = useRouter();
-	const [direction, setDirection] = useState(0);
-	const [curIndex, setCurIndex] = useState(index);
+	const [, setLastViewedPhoto] = usePrivateLastViewedPhoto();
 
-	function changePhotoId(newVal: number) {
-		if (newVal > index) {
-			setDirection(1);
-		} else {
-			setDirection(-1);
-		}
-		setCurIndex(newVal);
-		router.push(`/private/p/${newVal}`);
+	function closeModal() {
+		setLastViewedPhoto(currentPhoto.id);
+		window.location.href = "/private";
 	}
 
-	useKeypress("ArrowRight", () => {
-		changePhotoId(index + 1);
-	});
+	function changePhotoId(newVal: number) {
+		return newVal;
+	}
 
-	useKeypress("ArrowLeft", () => {
-		if (index > 0) {
-			changePhotoId(index - 1);
-		}
+	useKeypress("Escape", () => {
+		closeModal();
 	});
 
 	return (
 		<div className="fixed inset-0 flex items-center justify-center">
+			<button
+				className="absolute inset-0 z-30 cursor-default bg-black backdrop-blur-2xl"
+				onClick={closeModal}
+			>
+				<Image
+					src={currentPhoto.blurDataUrl}
+					className="pointer-events-none h-full w-full"
+					alt="blurred background"
+					fill
+					priority={true}
+				/>
+			</button>
 			<SharedModal
-				index={curIndex}
-				direction={direction}
+				index={index}
 				changePhotoId={changePhotoId}
 				currentPhoto={currentPhoto}
-				closeModal={() => router.push("/private")}
+				closeModal={closeModal}
 				navigation={false}
+				basePath="/private"
 			/>
 		</div>
 	);
