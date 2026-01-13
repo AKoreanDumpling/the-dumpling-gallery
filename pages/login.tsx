@@ -49,13 +49,13 @@ const Login: NextPage = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
+				credentials: "same-origin",
 				body: JSON.stringify({ accessCode }),
 			});
 
 			if (response.ok) {
-
 				const redirectTo = typeof redirect === "string" ? redirect : "/private";
-				router.push(redirectTo);
+				window.location.href = redirectTo;
 			} else {
 				const data = await response.json();
 				setError(data.message || "Invalid access code");

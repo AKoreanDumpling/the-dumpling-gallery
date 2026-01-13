@@ -5,6 +5,7 @@ import PrivateCarousel from "../../../components/PrivateCarousel";
 import cloudinary from "../../../utils/cloudinary";
 import getBase64ImageUrl from "../../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../../utils/types";
+import { isAuthenticated } from "../../api/auth";
 
 const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 	const router = useRouter();
@@ -24,7 +25,7 @@ const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) 
 			{/* Private Gallery Indicator Banner */}
 			<div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 py-2 px-4 text-center text-white text-sm font-semibold shadow-lg">
 				<span className="mr-2">🔒</span>
-				Private Gallery - Authorized Access Only
+				Private
 			</div>
 
 			<main className="mx-auto max-w-[1960px] p-4 pt-12">
@@ -37,13 +38,12 @@ const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) 
 export default PrivatePhoto;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	// Check authentication on server side
 	const authCookie = context.req.cookies.private_auth;
 
-	if (!authCookie || authCookie !== "authenticated") {
+	if (!isAuthenticated(authCookie)) {
 		return {
 			redirect: {
-				destination: `/login?redirect=/private/p/${context.params.photoId}`,
+				destination: `/login?redirect=/private/p/${context.params?.photoId}`,
 				permanent: false,
 			},
 		};

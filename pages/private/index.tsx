@@ -12,6 +12,7 @@ import type { ImageProps } from "../../utils/types";
 import { usePrivateLastViewedPhoto } from "../../utils/usePrivateLastViewedPhoto";
 import { AnimatePresence, motion } from "framer-motion";
 import Footer from "../_footer";
+import { isAuthenticated } from "../api/auth";
 
 // Animation variants
 const fadeInUp = {
@@ -87,12 +88,15 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 			<Head>
 				<title>The Dumpling Gallery (Private)</title>
 			</Head>
-
+			<div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 py-2 px-4 text-center text-white text-sm font-semibold shadow-lg">
+				<span className="mr-2">🔒</span>
+				Private
+			</div>
 
 			{/* Loading Overlay */}
 
 
-			<main className="mx-auto max-w-[1960px] p-4">
+			<main className="mx-auto max-w-[1960px] p-4 pt-12">
 				<AnimatePresence mode="wait">
 					{photoId && (
 						<PrivateModal
@@ -221,10 +225,9 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 export default PrivateHome;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	// Check authentication on server side
 	const authCookie = context.req.cookies.private_auth;
 
-	if (!authCookie || authCookie !== "authenticated") {
+	if (!isAuthenticated(authCookie)) {
 		return {
 			redirect: {
 				destination: "/login?redirect=/private",
