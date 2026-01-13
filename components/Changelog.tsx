@@ -135,24 +135,24 @@ export default function Changelog({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
+						transition={{ duration: 0.2 } as any}
 						className="fixed inset-0 bg-black/70 backdrop-blur-sm"
 						aria-hidden="true"
 					/>
-
-					<Dialog.Panel
-						as={motion.div}
+					<motion.div
+						role="dialog"
+						aria-modal="true"
 						initial={{ opacity: 0, scale: 0.95, y: 20 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: 20 }}
-						transition={{ duration: 0.2 }}
+						transition={{ duration: 0.2 } as any}
 						className="relative z-[201] w-full max-w-lg max-h-[80vh] overflow-hidden rounded-xl bg-black border border-white/20 shadow-2xl"
 					>
 						{/* Header */}
 						<div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-							<Dialog.Title className="text-xl font-semibold text-white">
+							<h2 className="text-xl font-semibold text-white">
 								What's New
-							</Dialog.Title>
+							</h2>
 
 						</div>
 
@@ -194,7 +194,7 @@ export default function Changelog({
 								Got it!
 							</button>
 						</div>
-					</Dialog.Panel>
+					</motion.div>
 				</Dialog>
 			)}
 		</AnimatePresence>

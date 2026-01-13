@@ -3,6 +3,7 @@ onlyBuiltDependencies:
   - core-js
   - esbuild
   - jpegtran-bin
+  - mozjpeg
   - sharp
   - unrs-resolver
 
