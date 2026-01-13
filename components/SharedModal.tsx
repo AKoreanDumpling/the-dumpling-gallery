@@ -80,7 +80,7 @@ export default function SharedModal({
 			{/* Full screen container */}
 			<div className="fixed inset-0 z-50 flex flex-col pointer-events-auto" {...handlers}>
 				{/* Top bar with buttons */}
-				<div className="flex-shrink-0 flex items-center justify-between p-3 z-50">
+				<div className={`flex-shrink-0 flex items-center justify-between p-3 z-50 ${basePath === "/private" ? "pt-12" : ""}`}>
 					<button
 						onClick={handleClose}
 						className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"

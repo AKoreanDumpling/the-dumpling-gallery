@@ -1,4 +1,4 @@
-import { Dialog } from "@headlessui/react";
+﻿import { Dialog } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -77,6 +77,7 @@ export default function PrivateModal({
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 			>
+
 				{/* Blurred background image */}
 				<div className="absolute inset-0 -z-10 overflow-hidden bg-black">
 					<AnimatePresence mode="sync">

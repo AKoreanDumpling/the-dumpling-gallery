@@ -2,6 +2,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PrivateCarousel from "../../../components/PrivateCarousel";
+import PrivateBanner from "../../../components/PrivateBanner";
 import cloudinary from "../../../utils/cloudinary";
 import getBase64ImageUrl from "../../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../../utils/types";
@@ -21,14 +22,8 @@ const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) 
 				<meta property="og:image" content={currentPhotoUrl} />
 				<meta name="twitter:image" content={currentPhotoUrl} />
 			</Head>
-
-			{/* Private Gallery Indicator Banner */}
-			<div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 py-2 px-4 text-center text-white text-sm font-semibold shadow-lg">
-				<span className="mr-2">🔒</span>
-				Private
-			</div>
-
-			<main className="mx-auto max-w-[1960px] p-4 pt-12">
+			<PrivateBanner />
+			<main className="mx-auto max-w-[1960px] p-4 pt-14">
 				<PrivateCarousel currentPhoto={currentPhoto} index={index} />
 			</main>
 		</>

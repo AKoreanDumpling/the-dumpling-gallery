@@ -3,3 +3,33 @@
 html {
 	scroll-behavior: smooth;
 }
+
+/* Animation delays */
+.animation-delay-100 {
+	animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+	animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+	animation-delay: 300ms;
+}
+
+/* Animated gradient banner */
+@keyframes gradient-shift {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	100% {
+		background-position: -200% 50%;
+	}
+}
+
+.animated-gradient-banner {
+	background: linear-gradient(90deg, #3b0b67, #9b1a53, #3b0b67);
+	background-size: 200% 100%;
+	animation: gradient-shift 3s ease-in-out infinite;
+}

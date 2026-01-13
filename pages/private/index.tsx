@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Bridge from "../../components/Icons/Bridge";
 import PrivateModal from "../../components/PrivateModal";
+import PrivateBanner from "../../components/PrivateBanner";
 import cloudinary from "../../utils/cloudinary";
 import getBase64ImageUrl from "../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../utils/types";
@@ -88,15 +89,12 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 			<Head>
 				<title>The Dumpling Gallery (Private)</title>
 			</Head>
-			<div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 py-2 px-4 text-center text-white text-sm font-semibold shadow-lg">
-				<span className="mr-2">🔒</span>
-				Private
-			</div>
+			<PrivateBanner />
 
 			{/* Loading Overlay */}
 
 
-			<main className="mx-auto max-w-[1960px] p-4 pt-12">
+			<main className="mx-auto max-w-[1960px] p-4 pt-14">
 				<AnimatePresence mode="wait">
 					{photoId && (
 						<PrivateModal
@@ -125,20 +123,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 								<Bridge />
 							</span>
 							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
-						</motion.div>
-
-						<motion.div
-							className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-yellow-800 px-3 py-1 text-xs font-semibold"
-							initial={{ opacity: 0, x: 20 }}
-							animate={{ opacity: 1, x: 0 }}
-							transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-						>
-							<motion.span
-								animate={{ scale: [1, 1.1, 1] }}
-								transition={{ duration: 2, repeat: Infinity }}
-							>
-								🔒 Private
-							</motion.span>
 						</motion.div>
 
 						<motion.h1
