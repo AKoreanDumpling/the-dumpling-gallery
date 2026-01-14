@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Bridge from "../../components/Icons/Bridge";
 import PrivateModal from "../../components/PrivateModal";
 import PrivateBanner from "../../components/PrivateBanner";
+import ImageSkeleton from "../../components/ImageSkeleton";
 import cloudinary from "../../utils/cloudinary";
 import getBase64ImageUrl from "../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../utils/types";
@@ -59,6 +60,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = usePrivateLastViewedPhoto();
 	const [loadedCount, setLoadedCount] = useState(0);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
 
@@ -67,6 +69,15 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	};
 
 	const allImagesLoaded = images.length === 0 || loadedCount >= images.length;
+
+	useEffect(() => {
+		// Hide skeleton after a short delay or when enough images load
+		if (loadedCount >= Math.min(4, images.length) || images.length === 0) {
+			setIsLoading(false);
+		}
+		const timer = setTimeout(() => setIsLoading(false), 1000);
+		return () => clearTimeout(timer);
+	}, [loadedCount, images.length]);
 
 	const handleLogout = async () => {
 		try {
@@ -161,6 +172,9 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 						</motion.button>
 
 					</motion.div>
+
+					{/* Loading skeleton */}
+					{isLoading && <ImageSkeleton count={8} variant="gallery" />}
 
 					{images.map(({ id, public_id, format, blurDataUrl }, index) => (
 						<motion.div

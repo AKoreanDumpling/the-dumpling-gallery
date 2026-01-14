@@ -4,15 +4,13 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 
-const WIPE_DURATION = 400; // Duration of wipe animation in ms
-const MIN_HOLD_TIME = 200; // Minimum time to hold the wipe on screen
+const WIPE_DURATION = 400;
+const MIN_HOLD_TIME = 200;
 
 // Routes that should skip the wipe transition
 const shouldSkipWipe = (fromPath: string, toPath: string) => {
-	const isPhotoRoute = (path: string) => /^\/p\/\d+/.test(path) || path.includes("photoId");
+	const isPhotoRoute = (path: string) => /^\/(private\/)?p\/\d+/.test(path) || path.includes("photoId");
 	const isIndexRoute = (path: string) => path === "/" || path.startsWith("/?");
-
-	// Skip wipe when navigating between index and photo viewer (modal-like behavior)
 	const fromIsPhoto = isPhotoRoute(fromPath);
 	const toIsPhoto = isPhotoRoute(toPath);
 	const fromIsIndex = isIndexRoute(fromPath);

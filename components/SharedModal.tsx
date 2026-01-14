@@ -14,6 +14,7 @@ import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
 import { range } from "../utils/range";
 import type { ImageProps, SharedModalProps } from "../utils/types";
+import ImageSkeleton from "./ImageSkeleton";
 
 export default function SharedModal({
 	index,
@@ -133,6 +134,20 @@ export default function SharedModal({
 
 					{/* Image container */}
 					<div className="flex-1 relative flex items-center justify-center min-w-0 min-h-0 h-full">
+						{/* Loading skeleton for main image */}
+						<AnimatePresence>
+							{!loaded && (
+								<motion.div
+									className="absolute inset-0 z-10"
+									initial={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.3 }}
+								>
+									<ImageSkeleton variant="modal" />
+								</motion.div>
+							)}
+						</AnimatePresence>
+
 						<AnimatePresence initial={false} custom={direction}>
 							<motion.div
 								key={index}
@@ -148,6 +163,7 @@ export default function SharedModal({
 										src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 											}/image/upload/c_scale,w_1920/${currentImage.public_id
 											}.${currentImage.format}`}
+
 										width={Number(currentImage.width) || 1920}
 										height={Number(currentImage.height) || 1280}
 										priority
