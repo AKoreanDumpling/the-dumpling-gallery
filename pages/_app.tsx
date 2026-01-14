@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 
 const WIPE_DURATION = 400;
-const MIN_HOLD_TIME = 200;
+const MIN_HOLD_TIME = 3600;
 
 // Routes that should skip the wipe transition
 const shouldSkipWipe = (fromPath: string, toPath: string) => {
-	const isPhotoRoute = (path: string) => /^\/(private\/)?p\/\d+/.test(path) || path.includes("photoId");
-	const isIndexRoute = (path: string) => path === "/" || path.startsWith("/?");
+	const isPhotoRoute = (path: string) => path.includes("/p");
+	const isIndexRoute = (path: string) => path === "/" || path === "/private";
 	const fromIsPhoto = isPhotoRoute(fromPath);
 	const toIsPhoto = isPhotoRoute(toPath);
 	const fromIsIndex = isIndexRoute(fromPath);
