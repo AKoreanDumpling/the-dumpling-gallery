@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import Bridge from "../components/Icons/Bridge";
 import Modal from "../components/Modal";
 import Changelog from "../components/Changelog";
-import ImageSkeleton from "../components/ImageSkeleton";
 import cloudinary from "../utils/cloudinary";
 import getBase64ImageUrl from "../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../utils/types";
@@ -208,9 +207,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							Photos will typically stay on The Dumpling Gallery for 1 week before being removed to manage storage.
 						</Admonition>
 					</motion.div>
-
-					{/* Loading skeleton */}
-					{isLoading && <ImageSkeleton count={8} variant="gallery" />}
 
 					{images.map(({ id, public_id, format, blurDataUrl }, index) => (
 						<motion.div

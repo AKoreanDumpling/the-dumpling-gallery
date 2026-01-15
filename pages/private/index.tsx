@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import Bridge from "../../components/Icons/Bridge";
 import PrivateModal from "../../components/PrivateModal";
 import PrivateBanner from "../../components/PrivateBanner";
-import ImageSkeleton from "../../components/ImageSkeleton";
 import cloudinary from "../../utils/cloudinary";
 import getBase64ImageUrl from "../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../utils/types";
@@ -173,8 +172,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 					</motion.div>
 
-					{/* Loading skeleton */}
-					{isLoading && <ImageSkeleton count={8} variant="gallery" />}
+
 
 					{images.map(({ id, public_id, format, blurDataUrl }, index) => (
 						<motion.div
