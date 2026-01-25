@@ -145,7 +145,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 						<motion.button
 							onClick={handleLogout}
-							className="pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+							className="cursor-pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
 							variants={fadeInUp}
 							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(239,68,68,0.5)" }}
 							whileTap={{ scale: 0.95 }}

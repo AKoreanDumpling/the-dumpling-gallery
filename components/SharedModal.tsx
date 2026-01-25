@@ -79,23 +79,23 @@ export default function SharedModal({
 				<div className={`flex-shrink-0 flex items-center justify-between p-3 z-50 ${basePath === "/private" ? "pt-12" : ""}`}>
 					<button
 						onClick={handleClose}
-						className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+						className="cursor-pointer rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
 					>
 						{navigation ? (
 							<XMarkIcon className="h-5 w-5" />
 						) : (
-							<ArrowUturnLeftIcon className="h-5 w-5" />
+							<ArrowUturnLeftIcon className="cursor-pointer h-5 w-5" />
 						)}
 					</button>
 					<div className="flex items-center gap-2">
 						{navigation && (
 							<a
 								href={`${basePath}/p/${index}`}
-								className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+								className="cursor-pointer rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
 								title="Open"
 								rel="noreferrer"
 							>
-								<ArrowTopRightOnSquareIcon className="h-5 w-5" />
+								<ArrowTopRightOnSquareIcon className="cursor-pointer h-5 w-5" />
 							</a>
 						)}
 						<button
@@ -105,10 +105,10 @@ export default function SharedModal({
 									`${index}.jpg`,
 								)
 							}
-							className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+							className="cursor-pointer rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
 							title="Download"
 						>
-							<ArrowDownTrayIcon className="h-5 w-5" />
+							<ArrowDownTrayIcon className="cursor-pointer h-5 w-5" />
 						</button>
 					</div>
 				</div>
@@ -118,7 +118,7 @@ export default function SharedModal({
 					{/* Left navigation button */}
 					{navigation && index > 0 && (
 						<button
-							className="flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none mr-2"
+							className=" cursor-pointer flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none mr-2"
 							onClick={() => changePhotoId(index - 1)}
 						>
 							<ChevronLeftIcon className="h-6 w-6" />
@@ -149,7 +149,7 @@ export default function SharedModal({
 										height={Number(currentImage.height) || 1280}
 										priority
 										alt="Image"
-										className="max-w-full max-h-full w-auto h-auto object-contain"
+										className="max-w-full max-h-full w-auto h-auto object-contain "
 									/>
 								)}
 							</motion.div>
@@ -159,7 +159,7 @@ export default function SharedModal({
 					{/* Right navigation button */}
 					{navigation && index + 1 < imagesLength && (
 						<button
-							className="flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none ml-2"
+							className="cursor-pointer flex-shrink-0 z-50 rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none ml-2"
 							onClick={() => changePhotoId(index + 1)}
 						>
 							<ChevronRightIcon className="h-6 w-6" />
@@ -195,7 +195,7 @@ export default function SharedModal({
 											? "z-20 rounded-md shadow shadow-black/50"
 											: "z-10"
 											} ${image.id === 0 ? "rounded-l-md" : ""} ${image.id === imagesLength - 1 ? "rounded-r-md" : ""
-											} relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
+											} relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none cursor-pointer`}
 									>
 										<Image
 											alt="small photos on the bottom"

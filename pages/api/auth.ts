@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
-import crypto from "crypto";
 
 // Simple in-memory rate limiting (use Redis in production for multi-instance)
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
