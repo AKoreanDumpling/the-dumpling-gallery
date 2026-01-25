@@ -62,23 +62,8 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
 	const { isOpen: isChangelogOpen, openChangelog, closeChangelog } = useChangelog();
-	const [isLoading, setIsLoading] = useState(true);
-	const [loadedCount, setLoadedCount] = useState(0);
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
-
-	const handleImageLoad = () => {
-		setLoadedCount((prev) => prev + 1);
-	};
-
-	useEffect(() => {
-		// Hide skeleton after a short delay or when enough images load
-		if (loadedCount >= Math.min(4, images.length) || images.length === 0) {
-			setIsLoading(false);
-		}
-		const timer = setTimeout(() => setIsLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, [loadedCount, images.length]);
 
 	useEffect(() => {
 		// This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
@@ -238,7 +223,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 					  (max-width: 1280px) 50vw,
 					  (max-width: 1536px) 33vw,
 					  25vw"
-									onLoad={handleImageLoad}
 								/>
 							</Link>
 						</motion.div>

@@ -4,20 +4,6 @@ html {
 	scroll-behavior: smooth;
 }
 
-/* Skeleton loading animation */
-@keyframes skeleton-pulse {
-	0%, 100% {
-		opacity: 0.4;
-	}
-
-	50% {
-		opacity: 0.8;
-	}
-}
-
-.skeleton-pulse {
-	animation: skeleton-pulse 1.5s ease-in-out infinite;
-}
 
 /* Animation delays */
 .animation-delay-100 {

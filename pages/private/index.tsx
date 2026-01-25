@@ -58,25 +58,8 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = usePrivateLastViewedPhoto();
-	const [loadedCount, setLoadedCount] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
-
-	const handleImageLoad = () => {
-		setLoadedCount((prev) => prev + 1);
-	};
-
-	const allImagesLoaded = images.length === 0 || loadedCount >= images.length;
-
-	useEffect(() => {
-		// Hide skeleton after a short delay or when enough images load
-		if (loadedCount >= Math.min(4, images.length) || images.length === 0) {
-			setIsLoading(false);
-		}
-		const timer = setTimeout(() => setIsLoading(false), 1000);
-		return () => clearTimeout(timer);
-	}, [loadedCount, images.length]);
 
 	const handleLogout = async () => {
 		try {
@@ -205,7 +188,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 					  (max-width: 1280px) 50vw,
 					  (max-width: 1536px) 33vw,
 					  25vw"
-									onLoad={handleImageLoad}
 								/>
 							</Link>
 						</motion.div>

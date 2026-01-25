@@ -14,8 +14,6 @@ import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
 import { range } from "../utils/range";
 import type { ImageProps, SharedModalProps } from "../utils/types";
-import ImageSkeleton from "./ImageSkeleton";
-
 export default function SharedModal({
 	index,
 	images,
@@ -26,7 +24,6 @@ export default function SharedModal({
 	direction,
 	basePath = "",
 }: SharedModalProps) {
-	const [loaded, setLoaded] = useState(false);
 	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
 	const [isClosing, setIsClosing] = useState(false);
 
@@ -56,8 +53,6 @@ export default function SharedModal({
 
 	const allThumbnailsLoaded = !navigation ||
 		(filteredImages && filteredImages.every((img) => thumbnailsLoaded.has(img.id)));
-
-	const isFullyLoaded = loaded && allThumbnailsLoaded;
 
 	const imagesLength = images?.length ?? 0;
 
@@ -134,20 +129,6 @@ export default function SharedModal({
 
 					{/* Image container */}
 					<div className="flex-1 relative flex items-center justify-center min-w-0 min-h-0 h-full">
-						{/* Loading skeleton for main image */}
-						<AnimatePresence>
-							{!loaded && (
-								<motion.div
-									className="absolute inset-0 z-10"
-									initial={{ opacity: 1 }}
-									exit={{ opacity: 0 }}
-									transition={{ duration: 0.3 }}
-								>
-									<ImageSkeleton variant="modal" />
-								</motion.div>
-							)}
-						</AnimatePresence>
-
 						<AnimatePresence initial={false} custom={direction}>
 							<motion.div
 								key={index}
@@ -168,7 +149,6 @@ export default function SharedModal({
 										height={Number(currentImage.height) || 1280}
 										priority
 										alt="Image"
-										onLoad={() => setLoaded(true)}
 										className="max-w-full max-h-full w-auto h-auto object-contain"
 									/>
 								)}
