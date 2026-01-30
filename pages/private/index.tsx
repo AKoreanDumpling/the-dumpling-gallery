@@ -122,14 +122,14 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
 							variants={fadeInUp}
 						>
-							The Dumpling Gallery:<br />[TITLE PLACEHOLDER]
+							The Dumpling Gallery:<br />"Done 4" Band Clips :)
 						</motion.h1>
 
 						<motion.p
 							className="max-w-[40ch] text-white/75 sm:max-w-[32ch]"
 							variants={fadeInUp}
 						>
-							View and download full resolution photos! Images are typically removed after 72 hours - save the ones you like!
+							View and download full resolution photos!
 						</motion.p>
 
 						<motion.a

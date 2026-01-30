@@ -120,7 +120,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
 							variants={fadeInUp}
 						>
-							The Dumpling Gallery:<br />[TITLE PLACEHOLDER]
+							The Dumpling Gallery:<br />"Done 4" Band
 						</motion.h1>
 
 						<motion.p
