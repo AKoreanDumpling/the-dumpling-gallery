@@ -14,27 +14,27 @@ function Custom503() {
 
 				<div className="display-grid place-items-center">
 
-					<div className="after:content relative h-[629px] sm:max-w-full max-w-1/3 mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0 animate-fade-in">
+					<div className="after:content relative h-[629px] sm:max-w-full max-w-1/3 mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
 						<div className="absolute w-1000px inset-0 flex items-center justify-center opacity-20 ">
 							<span className="flex max-h-full max-w-full items-center justify-center">
 								<Bridge />
 							</span>
 							<span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
 						</div>
-						<h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest animate-pulse">
+						<h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest">
 							Server Error 503
 						</h1>
 
-						<p className="max-w-[60ch] text-white/75 sm:max-w-[40ch] mt-0 mb-0 animate-slide-up animation-delay-100">
+						<p className="max-w-[60ch] text-white/75 sm:max-w-[40ch] mt-0 mb-0">
 							The Dumpling Gallery is undergoing maintenance (or there are no photos to display!). The server cannot handle requests at this time. If you're expecting new photos, please allow up to 48 hours for them to be uploaded.<br /><br /><em>Thank you for your patience.</em>
 						</p>
-						<h2 className="mt-0 mb-0 text-base font-bold uppercase tracking-wide animate-slide-up animation-delay-200">
+						<h2 className="mt-0 mb-0 text-base font-bold uppercase tracking-wide">
 							Service Unavailable
 						</h2>
 
 						<a
 							href="/"
-							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white hover:scale-105 animate-slide-up animation-delay-300"
+							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white hover:scale-105"
 							rel="noreferrer"
 						>
 							Retry

@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 
-const WIPE_DURATION = 400;
-const MIN_HOLD_TIME = 3600;
+const WIPE_DURATION = 500;
+const MIN_HOLD_TIME = 1000;
 
 // Routes that should skip the wipe transition
 const shouldSkipWipe = (fromPath: string, toPath: string) => {
@@ -120,7 +120,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<>
 			{/* Black sliding wipe overlay */}
 			<motion.div
-				className="fixed inset-0 z-[200] bg-black/95 pointer-events-none flex items-center justify-center"
+				className="fixed inset-0 z-100 bg-[#1A1A1A] pointer-events-none flex items-center justify-center"
 				animate={{ x: getWipeX() }}
 				transition={{
 					duration: wipeState === "idle" ? 0 : WIPE_DURATION / 1000,
@@ -130,7 +130,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				{/* Centered loader */}
 				{showLoader && (
 					<motion.div
-						className="flex flex-col bg-white/5 aspect-square rounded-xl items-center gap-4"
+						className="flex flex-col bg-white/10 aspect-square rounded-xl items-center gap-4"
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.2 }}
