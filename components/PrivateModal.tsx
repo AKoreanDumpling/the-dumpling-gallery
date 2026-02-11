@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import useKeypress from "react-use-keypress";
 import type { ImageProps } from "../utils/types";
+import { getThumbnailUrl } from "../utils/mediaHelpers";
 import SharedModal from "./SharedModal";
 
 export default function PrivateModal({
@@ -91,7 +92,7 @@ export default function PrivateModal({
 								transition={{ duration: 0.5 }}
 							>
 								<Image
-									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_32/${currentImage.public_id}.${currentImage.format}`}
+									src={getThumbnailUrl(currentImage, 32)}
 									alt=""
 									fill
 									className="object-cover blur-3xl scale-125 brightness-50"
@@ -125,4 +126,4 @@ export default function PrivateModal({
 			</motion.div>
 		</Dialog>
 	);
-}
+} 

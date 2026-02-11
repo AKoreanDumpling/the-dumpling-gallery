@@ -10,8 +10,14 @@ export default async function getBase64ImageUrl(
 		return url;
 	}
 
-	// Original Cloudinary image URL
-	const cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${image.public_id}.${image.format}`;
+	let cloudinaryUrl: string;
+	if (image.resource_type === "video") {
+		// Use Cloudinary video thumbnail (first frame) for blur placeholder
+		cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/so_0/${image.public_id}.jpg`;
+	} else {
+		// Original Cloudinary image URL
+		cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${image.public_id}.${image.format}`;
+	}
 
 	// Use wsrv.nl loader for blur placeholder
 	const wsrvUrl = new URL('https://wsrv.nl/');

@@ -5,6 +5,7 @@ import PrivateCarousel from "../../../components/PrivateCarousel";
 import PrivateBanner from "../../../components/PrivateBanner";
 import cloudinary from "../../../utils/cloudinary";
 import getBase64ImageUrl from "../../../utils/generateBlurPlaceholder";
+import { getThumbnailUrl } from "../../../utils/mediaHelpers";
 import type { ImageProps } from "../../../utils/types";
 import { isAuthenticated } from "../../api/auth";
 
@@ -13,7 +14,7 @@ const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) 
 	const { photoId } = router.query;
 	let index = Number(photoId);
 
-	const currentPhotoUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_2560/${currentPhoto.public_id}.${currentPhoto.format}`;
+	const currentPhotoUrl = getThumbnailUrl(currentPhoto, 2560);
 
 	return (
 		<>
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			width: result.width,
 			public_id: result.public_id,
 			format: result.format,
+			resource_type: result.resource_type,
 		});
 		i++;
 	}

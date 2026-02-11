@@ -6,12 +6,14 @@ import {
 	ChevronRightIcon,
 	XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { PlayIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
+import { isVideo, getThumbnailUrl, getFullUrl } from "../utils/mediaHelpers";
 import { range } from "../utils/range";
 import type { ImageProps, SharedModalProps } from "../utils/types";
 export default function SharedModal({
@@ -26,6 +28,7 @@ export default function SharedModal({
 }: SharedModalProps) {
 	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
 	const [isClosing, setIsClosing] = useState(false);
+	const videoRef = useRef<HTMLVideoElement>(null);
 
 	const filteredImages: ImageProps[] | undefined = images?.filter((img: ImageProps) =>
 		range(index - 15, index + 15).includes(img.id),
@@ -101,8 +104,8 @@ export default function SharedModal({
 						<button
 							onClick={() =>
 								downloadPhoto(
-									`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${currentImage?.public_id}.${currentImage?.format}`,
-									`${index}.jpg`,
+									getFullUrl(currentImage),
+									`${index}.${isVideo(currentImage) ? currentImage?.format || "mp4" : "jpg"}`,
 								)
 							}
 							className="cursor-pointer rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
@@ -113,7 +116,7 @@ export default function SharedModal({
 					</div>
 				</div>
 
-				{/* Main content area with image and side buttons */}
+				{/* Main content area with image/video and side buttons */}
 				<div className="flex-1 flex items-center justify-center relative min-h-0 px-3">
 					{/* Left navigation button */}
 					{navigation && index > 0 && (
@@ -127,7 +130,7 @@ export default function SharedModal({
 					{/* Spacer when no left button */}
 					{navigation && index === 0 && <div className="flex-shrink-0 w-14 mr-2" />}
 
-					{/* Image container */}
+					{/* Image/Video container */}
 					<div className="flex-1 relative flex items-center justify-center min-w-0 min-h-0 h-full">
 						<AnimatePresence initial={false} custom={direction}>
 							<motion.div
@@ -140,17 +143,27 @@ export default function SharedModal({
 								className="absolute inset-0 flex items-center justify-center"
 							>
 								{currentImage && (
-									<Image
-										src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-											}/image/upload/c_scale,w_1920/${currentImage.public_id
-											}.${currentImage.format}`}
-
-										width={Number(currentImage.width) || 1920}
-										height={Number(currentImage.height) || 1280}
-										priority
-										alt="Image"
-										className="max-w-full max-h-full w-auto h-auto object-contain "
-									/>
+									isVideo(currentImage) ? (
+										<video
+											ref={videoRef}
+											key={currentImage.public_id}
+											src={getFullUrl(currentImage)}
+											poster={getThumbnailUrl(currentImage, 1920)}
+											controls
+											playsInline
+											preload="metadata"
+											className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+										/>
+									) : (
+										<Image
+											src={getThumbnailUrl(currentImage, 1920)}
+											width={Number(currentImage.width) || 1920}
+											height={Number(currentImage.height) || 1280}
+											priority
+											alt="Image"
+											className="max-w-full max-h-full w-auto h-auto object-contain "
+										/>
+									)
 								)}
 							</motion.div>
 						</AnimatePresence>
@@ -205,9 +218,14 @@ export default function SharedModal({
 												? "brightness-110 hover:brightness-110"
 												: "brightness-50 contrast-125 hover:brightness-75"
 												} h-full transform object-cover transition`}
-											src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_180/${image.public_id}.${image.format}`}
+											src={getThumbnailUrl(image, 180)}
 											onLoad={() => handleThumbnailLoad(image.id)}
 										/>
+										{isVideo(image) && (
+											<div className="absolute inset-0 flex items-center justify-center">
+												<PlayIcon className="h-4 w-4 text-white drop-shadow-lg" />
+											</div>
+										)}
 									</motion.button>
 								))}
 							</AnimatePresence>

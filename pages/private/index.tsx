@@ -10,10 +10,12 @@ import PrivateBanner from "../../components/PrivateBanner";
 import cloudinary from "../../utils/cloudinary";
 import getBase64ImageUrl from "../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../utils/types";
+import { isVideo, getThumbnailUrl } from "../../utils/mediaHelpers";
 import { usePrivateLastViewedPhoto } from "../../utils/usePrivateLastViewedPhoto";
 import { AnimatePresence, motion } from "framer-motion";
 import Footer from "../_footer";
 import { isAuthenticated } from "../api/auth";
+import { PlayIcon } from "@heroicons/react/24/solid";
 
 // Animation variants
 const fadeInUp = {
@@ -157,9 +159,9 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 
 
-					{images.map(({ id, public_id, format, blurDataUrl }, index) => (
+					{images.map((image, index) => (
 						<motion.div
-							key={id}
+							key={image.id}
 							initial="hidden"
 							animate="visible"
 							whileHover="hover"
@@ -168,19 +170,19 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="mb-5"
 						>
 							<Link
-								href={`/private?photoId=${id}`}
-								as={`/private/p/${id}`}
-								ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
+								href={`/private?photoId=${image.id}`}
+								as={`/private/p/${image.id}`}
+								ref={image.id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
 								shallow
 								className="after:content group relative block w-full cursor-hand after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
 							>
 								<Image
-									alt="Private Photo"
+									alt={isVideo(image) ? "Video thumbnail" : "Private Photo"}
 									className="transform rounded-lg brightness-90 transition-all duration-300 will-change-auto group-hover:brightness-110 group-hover:shadow-xl"
 									style={{ transform: "translate3d(0, 0, 0)" }}
 									placeholder="blur"
-									blurDataURL={blurDataUrl}
-									src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
+									blurDataURL={image.blurDataUrl}
+									src={getThumbnailUrl(image, 720)}
 									width={720}
 									height={480}
 									loading="eager"
@@ -189,6 +191,13 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 					  (max-width: 1536px) 33vw,
 					  25vw"
 								/>
+								{isVideo(image) && (
+									<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+										<div className="rounded-full bg-black/60 p-3 backdrop-blur-sm">
+											<PlayIcon className="h-8 w-8 text-white" />
+										</div>
+									</div>
+								)}
 							</Link>
 						</motion.div>
 					))}
@@ -230,12 +239,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			width: result.width,
 			public_id: result.public_id,
 			format: result.format,
+			resource_type: result.resource_type,
 		});
 		i++;
 	}
 
-	const blurImagePromises = results.resources.map((image: ImageProps) => {
-		return getBase64ImageUrl(image);
+	const blurImagePromises = results.resources.map((image: ImageProps, idx: number) => {
+		return getBase64ImageUrl(reducedResults[idx]);
 	});
 	const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
 

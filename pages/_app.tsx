@@ -9,7 +9,7 @@ const MIN_HOLD_TIME = 1000;
 
 // Routes that should skip the wipe transition
 const shouldSkipWipe = (fromPath: string, toPath: string) => {
-	const isPhotoRoute = (path: string) => path.includes("/p");
+	const isPhotoRoute = (path: string) => path.includes("/p/");
 	const isIndexRoute = (path: string) => path === "/" || path === "/private";
 	const fromIsPhoto = isPhotoRoute(fromPath);
 	const toIsPhoto = isPhotoRoute(toPath);

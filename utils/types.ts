@@ -5,6 +5,7 @@ export interface ImageProps {
 	width: string;
 	public_id: string;
 	format: string;
+	resource_type?: string;
 	blurDataUrl?: string;
 }
 
