@@ -78,9 +78,9 @@ const Login: NextPage = () => {
 			</Head>
 
 			<main className="mx-auto max-w-[1960px] p-4">
-				<div className="flex min-h-[80vh] items-center justify-center">
+				<div className="flex min-h-[80vh] items-center justify-center px-4">
 					<motion.div
-						className="after:content relative h-[629px] sm:max-w-full max-w-1/3 mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0"
+						className="after:content relative w-full max-w-md h-auto mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-8 sm:pb-16 pt-32 sm:pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
 						initial="hidden"
 						animate="visible"
 						variants={staggerContainer}

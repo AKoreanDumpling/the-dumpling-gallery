@@ -11,6 +11,13 @@ interface ChangelogEntry {
 
 const changelogData: ChangelogEntry[] = [
 	{
+		version: "2.0.1",
+		date: "2026-2-13",
+		changes: [
+			"Emergency hotfix for mobile responsesiveness"
+		],
+	},
+	{
 		version: "2.0",
 		date: "2026-1-11",
 		changes: [
@@ -54,7 +61,7 @@ const changelogData: ChangelogEntry[] = [
 	},
 	{
 		version: "1.1.0",
-		date: "2025-01-10",
+		date: "2025-12-7",
 		changes: [
 			"Added download button for full resolution images",
 			"Added Twitter share functionality",
@@ -74,7 +81,7 @@ const changelogData: ChangelogEntry[] = [
 ];
 
 // Update with ver. num
-export const CURRENT_VERSION = "2.0";
+export const CURRENT_VERSION = "2.0.1";
 
 const fireConfetti = () => {
 	const duration = 800;
