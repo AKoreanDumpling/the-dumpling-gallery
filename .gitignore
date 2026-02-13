@@ -43,3 +43,4 @@ next-env.d.ts
 /.vs/the-dumpling-gallery.slnx/v18/DocumentLayout.json
 /.vs/the-dumpling-gallery.slnx/v18/DocumentLayout.backup.json
 /.vs/VSWorkspaceState.json
+debug.log
