@@ -32,6 +32,9 @@ export default function Modal({
 	}
 
 	function changePhotoId(newVal: number) {
+		if (newVal === curIndex) {
+			return;
+		}
 		if (newVal > index) {
 			setDirection(1);
 		} else {

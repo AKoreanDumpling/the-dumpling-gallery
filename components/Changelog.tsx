@@ -74,9 +74,8 @@ const changelogData: ChangelogEntry[] = [
 ];
 
 // Update with ver. num
-export const CURRENT_VERSION = "1.6";
+export const CURRENT_VERSION = "2.0";
 
-// Confetti function that shoots from both sides
 const fireConfetti = () => {
 	const duration = 800;
 	const end = Date.now() + duration;
@@ -111,16 +110,17 @@ const fireConfetti = () => {
 export default function Changelog({
 	isOpen,
 	onClose,
+	shouldCelebrate,
 }: {
 	isOpen: boolean;
 	onClose: () => void;
+	shouldCelebrate: boolean;
 }) {
-	// Fire confetti when modal opens
 	useEffect(() => {
-		if (isOpen) {
+		if (isOpen && shouldCelebrate) {
 			fireConfetti();
 		}
-	}, [isOpen]);
+	}, [isOpen, shouldCelebrate]);
 
 	return (
 		<AnimatePresence>
@@ -191,7 +191,7 @@ export default function Changelog({
 								onClick={onClose}
 								className="w-full rounded-lg bg-white px-4 py-2 font-semibold text-black transition hover:bg-white/90"
 							>
-								Got it!
+								Close
 							</button>
 						</div>
 					</motion.div>

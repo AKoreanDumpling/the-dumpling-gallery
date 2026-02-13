@@ -7,9 +7,11 @@ import SharedModal from "./SharedModal";
 export default function PrivateCarousel({
 	index,
 	currentPhoto,
+	images,
 }: {
 	index: number;
 	currentPhoto: ImageProps;
+	images: ImageProps[];
 }) {
 	const [, setLastViewedPhoto] = usePrivateLastViewedPhoto();
 
@@ -42,6 +44,7 @@ export default function PrivateCarousel({
 			</button>
 			<SharedModal
 				index={index}
+				images={images}
 				changePhotoId={changePhotoId}
 				currentPhoto={currentPhoto}
 				closeModal={closeModal}

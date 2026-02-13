@@ -9,7 +9,7 @@ import {
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
@@ -29,6 +29,7 @@ export default function SharedModal({
 	const [thumbnailsLoaded, setThumbnailsLoaded] = useState<Set<number>>(new Set());
 	const [isClosing, setIsClosing] = useState(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const preloadStartedRef = useRef(false);
 
 	const filteredImages: ImageProps[] | undefined = images?.filter((img: ImageProps) =>
 		range(index - 15, index + 15).includes(img.id),
@@ -63,6 +64,19 @@ export default function SharedModal({
 		setIsClosing(true);
 		closeModal();
 	};
+
+	useEffect(() => {
+		if (!images?.length || preloadStartedRef.current) {
+			return;
+		}
+		preloadStartedRef.current = true;
+
+		images.forEach((image) => {
+			const src = getThumbnailUrl(image, 1920);
+			const img = new window.Image();
+			img.src = src;
+		});
+	}, [navigation, images]);
 
 	return (
 		<MotionConfig

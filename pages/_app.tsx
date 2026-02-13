@@ -120,7 +120,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<>
 			{/* Black sliding wipe overlay */}
 			<motion.div
-				className="fixed inset-0 z-100 bg-[#1A1A1A] pointer-events-none flex items-center justify-center"
+				className="fixed inset-0 z-80 bg-black/90 backdrop-blur-md pointer-events-none flex items-center justify-center"
 				animate={{ x: getWipeX() }}
 				transition={{
 					duration: wipeState === "idle" ? 0 : WIPE_DURATION / 1000,

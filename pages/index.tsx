@@ -63,7 +63,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
-	const { isOpen: isChangelogOpen, openChangelog, closeChangelog } = useChangelog();
+	const {
+		isOpen: isChangelogOpen,
+		openChangelog,
+		closeChangelog,
+		hasUnseenVersion,
+	} = useChangelog();
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
 
@@ -84,7 +89,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 			</Head>
 
 			{/* Changelog Modal */}
-			<Changelog isOpen={isChangelogOpen} onClose={closeChangelog} />
+			<Changelog
+				isOpen={isChangelogOpen}
+				onClose={closeChangelog}
+				shouldCelebrate={hasUnseenVersion}
+			/>
 
 			<main className="mx-auto max-w-[1960px] p-4">
 
@@ -122,14 +131,14 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
 							variants={fadeInUp}
 						>
-							The Dumpling Gallery:<br />"Done 4" Band
+							The Dumpling Gallery:<br />Interact Bubble Tea Sale
 						</motion.h1>
 
 						<motion.p
 							className="max-w-[40ch] text-white/75 sm:max-w-[32ch]"
 							variants={fadeInUp}
 						>
-							View and download full resolution photos!
+							Febuary 12, 2026
 						</motion.p>
 
 						<motion.a
@@ -140,7 +149,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
 							whileTap={{ scale: 0.95 }}
 						>
-							Go to Photo Credits
+							Photo Credits
 						</motion.a>
 
 						<motion.a
@@ -191,7 +200,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 							keyword="info"
 							title={<span className="uppercase"><strong>Please Note</strong></span>}
 						>
-							Photos will typically stay on The Dumpling Gallery for 1 week before being removed to manage storage.
+							Photos will typically stay up for 1 week before being removed to manage storage.
 						</Admonition>
 					</motion.div>
 

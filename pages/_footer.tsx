@@ -2,7 +2,7 @@ function Footer() {
 	return (
 		<footer className="p-6 text-center text-white/80 sm:p-12">
 			<hr />
-			<h1 className="mt-6 mb-2 text-base font-bold uppercase tracking-widest" id="credits"> Credit:</h1>
+			<h1 className="mt-6 mb-2 text-base font-bold uppercase tracking-widest" id="credits"> Photos:</h1>
 			<div className="mt-4">
 				<a
 					href="https://instagram.com/AKoreanDumpling"

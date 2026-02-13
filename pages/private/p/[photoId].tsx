@@ -9,7 +9,13 @@ import { getThumbnailUrl } from "../../../utils/mediaHelpers";
 import type { ImageProps } from "../../../utils/types";
 import { isAuthenticated } from "../../api/auth";
 
-const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
+const PrivatePhoto: NextPage = ({
+	currentPhoto,
+	images,
+}: {
+	currentPhoto: ImageProps;
+	images: ImageProps[];
+}) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	let index = Number(photoId);
@@ -25,7 +31,7 @@ const PrivatePhoto: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) 
 			</Head>
 			<PrivateBanner />
 			<main className="mx-auto max-w-[1960px] p-4 pt-14">
-				<PrivateCarousel currentPhoto={currentPhoto} index={index} />
+				<PrivateCarousel currentPhoto={currentPhoto} index={index} images={images} />
 			</main>
 		</>
 	);
@@ -80,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			currentPhoto: currentPhoto,
+			images: reducedResults,
 		},
 	};
 };

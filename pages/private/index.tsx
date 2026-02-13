@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Footer from "../_footer";
 import { isAuthenticated } from "../api/auth";
 import { PlayIcon } from "@heroicons/react/24/solid";
+import Admonition from '@yozora/react-admonition';
 
 // Animation variants
 const fadeInUp = {
@@ -124,32 +125,32 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
 							variants={fadeInUp}
 						>
-							The Dumpling Gallery:<br />"Done 4" Band Clips :)
+							The Dumpling Gallery:<br />Red Flower Stunts?? idek man
 						</motion.h1>
 
 						<motion.p
 							className="max-w-[40ch] text-white/75 sm:max-w-[32ch]"
 							variants={fadeInUp}
 						>
-							View and download full resolution photos!
+							Febuary 12, 2026
 						</motion.p>
 
 						<motion.a
-							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors md:mt-4 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors transition-shadow md:mt-4 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
 							href="#credits"
 							rel="noreferrer"
 							variants={fadeInUp}
-							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
+							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 						>
-							Go to Photo Credits
+							Photo Credits
 						</motion.a>
 
 						<motion.button
 							onClick={handleLogout}
-							className="cursor-pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+							className="cursor-pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white transition-colors transition-shadow hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
 							variants={fadeInUp}
-							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(239,68,68,0.5)" }}
+							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 						>
 							Log Out
@@ -157,6 +158,18 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 					</motion.div>
 
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.5, duration: 0.5 }}
+					>
+						<Admonition
+							keyword="info"
+							title={<span className="uppercase"><strong>Please Note</strong></span>}
+						>
+							Photos will typically stay up for 1 week before being removed to manage storage.
+						</Admonition>
+					</motion.div>
 
 
 					{images.map((image, index) => (

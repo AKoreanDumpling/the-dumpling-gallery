@@ -146,8 +146,8 @@ const Login: NextPage = () => {
 							<motion.button
 								type="submit"
 								disabled={isLoading}
-								className="pointer rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/10 hover:text-white disabled:opacity-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-								whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
+								className="pointer rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors transition-shadow hover:bg-white/10 hover:text-white disabled:opacity-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 							>
 								{isLoading ? (
