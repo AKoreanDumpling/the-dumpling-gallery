@@ -16,7 +16,7 @@
 		"canvas-confetti": "^1.9.4",
 		"cloudinary": "latest",
 		"cookie": "^1.1.1",
-		"framer-motion": "^7.10.3",
+		"framer-motion": "^12.34.1",
 		"knip": "^5.83.1",
 		"next": "latest",
 		"react": "^18.3.1",
