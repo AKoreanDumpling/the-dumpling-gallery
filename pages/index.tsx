@@ -3,12 +3,11 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import Bridge from "../components/Icons/Bridge";
-import Modal from "../components/Modal";
+import { useEffect, useRef } from "react";
+import GalleryHero from "../components/GalleryHero";
+import GalleryModal from "../components/GalleryModal";
 import Changelog from "../components/Changelog";
 import cloudinary from "../utils/cloudinary";
-import getBase64ImageUrl from "../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../utils/types";
 import { isVideo, getThumbnailUrl } from "../utils/mediaHelpers";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
@@ -16,48 +15,11 @@ import { useChangelog } from "../utils/useChangelog";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AnimatePresence, motion } from "framer-motion";
-import Footer from "./_footer";
+import Footer from "../components/Footer";
 import Admonition from '@yozora/react-admonition';
 import { PlayIcon } from "@heroicons/react/24/solid";
-
-// Animation variants
-const fadeInUp = {
-	hidden: { opacity: 0, y: 20 },
-	visible: { opacity: 1, y: 0 }
-};
-
-const staggerContainer = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.1,
-			delayChildren: 0.2
-		}
-	}
-};
-
-const buttonVariants = {
-	initial: { scale: 1 },
-	hover: {
-		scale: 1.05,
-		transition: { type: "spring", stiffness: 400, damping: 10 }
-	},
-	tap: { scale: 0.95 }
-};
-
-const imageCardVariants = {
-	hidden: { opacity: 0, y: 30 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.5, ease: "easeOut" }
-	},
-	hover: {
-		y: -8,
-		transition: { type: "spring", stiffness: 300, damping: 20 }
-	}
-};
+import { imageCardVariants } from "../utils/galleryPageAnimations";
+import { addBlurDataUrls, mapResourcesToImages } from "../utils/prepareGalleryImages";
 
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
@@ -75,7 +37,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	useEffect(() => {
 		// This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
 		if (lastViewedPhoto && !photoId) {
-			lastViewedPhotoRef.current.scrollIntoView({ block: "center" });
+			lastViewedPhotoRef.current?.scrollIntoView({ block: "center" });
 			setLastViewedPhoto(null);
 		}
 	}, [photoId, lastViewedPhoto, setLastViewedPhoto]);
@@ -99,7 +61,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 				<AnimatePresence mode="wait">
 					{photoId && (
-						<Modal
+						<GalleryModal
 							images={images}
 							onClose={() => {
 								setLastViewedPhoto(Number(photoId));
@@ -109,87 +71,18 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 				</AnimatePresence>
 
 				<div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-					<motion.div
-						className="after:content relative mb-5 flex max-w-full h-[629px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0"
-						initial="hidden"
-						animate="visible"
-						variants={staggerContainer}
-					>
-						<motion.div
-							className="absolute inset-0 flex items-center justify-center opacity-20"
-							initial={{ opacity: 0, scale: 1.1 }}
-							animate={{ opacity: 0.2, scale: 1 }}
-							transition={{ duration: 1.2, ease: "easeOut" }}
-						>
-							<span className="flex max-h-full max-w-full items-center justify-center">
-								<Bridge />
-							</span>
-							<span className="absolute left-0 right-0 bottom-0 h-[300px] bg-gradient-to-b from-black/0 via-black to-black"></span>
-						</motion.div>
-
-						<motion.h1
-							className="mt-8 mb-2 text-base font-bold uppercase tracking-widest"
-							variants={fadeInUp}
-						>
-							The Dumpling Gallery:<br />Interact Bubble Tea Sale
-						</motion.h1>
-
-						<motion.p
-							className="max-w-[40ch] text-white/75 sm:max-w-[32ch]"
-							variants={fadeInUp}
-						>
-							Febuary 12, 2026
-						</motion.p>
-
-						<motion.a
-							className="pointer z-10 mt-6 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors md:mt-4 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-							href="#credits"
-							rel="noreferrer"
-							variants={fadeInUp}
-							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
-							whileTap={{ scale: 0.95 }}
-						>
-							Photo Credits
-						</motion.a>
-
-						<motion.a
-							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-							href="https://github.com/akoreandumpling/the-dumpling-gallery"
-							target="_blank"
-							rel="noreferrer"
-							variants={fadeInUp}
-							whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.4)" }}
-							whileTap={{ scale: 0.95 }}
-						>
-							Code on GitHub
-						</motion.a>
-
-						<motion.div variants={fadeInUp}>
-							<Link
-								href="/private"
-								className="pointer z-10 mt-0 inline-block rounded-lg border border-purple-400 bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-2 text-sm font-semibold text-white transition-all hover:from-purple-700 hover:to-pink-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]"
-							>
-								<motion.span
-									className="inline-block"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-								>
-									🔒 Private Access
-								</motion.span>
-							</Link>
-						</motion.div>
-
-						<motion.a
-							onClick={openChangelog}
-							className="pointer z-10 mt-0 rounded-lg border border-white bg-black px-3 py-2 text-sm font-semibold text-white transition-colors cursor-pointer hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-							variants={fadeInUp}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-						>
-							What's New
-						</motion.a>
-
-					</motion.div>
+					<GalleryHero
+						title={
+							<>
+								The Dumpling Gallery:<br />Done IV Lunchtime
+							</>
+						}
+						dateText="February 20, 2026"
+						showGithub={true}
+						showPrivateAccess={true}
+						showChangelog={true}
+						onOpenChangelog={openChangelog}
+					/>
 
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
@@ -265,33 +158,12 @@ export async function getStaticProps() {
 		.sort_by("public_id", "desc")
 		.max_results(400)
 		.execute();
-	let reducedResults: ImageProps[] = [];
-
-	let i = 0;
-	for (let result of results.resources) {
-		reducedResults.push({
-			id: i,
-			height: result.height,
-			width: result.width,
-			public_id: result.public_id,
-			format: result.format,
-			resource_type: result.resource_type,
-		});
-		i++;
-	}
-
-	const blurImagePromises = results.resources.map((image: ImageProps, idx: number) => {
-		return getBase64ImageUrl(reducedResults[idx]);
-	});
-	const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
-
-	for (let i = 0; i < reducedResults.length; i++) {
-		reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i];
-	}
+	const reducedResults = mapResourcesToImages(results.resources);
+	const imagesWithBlurDataUrls = await addBlurDataUrls(reducedResults);
 
 	return {
 		props: {
-			images: reducedResults,
+			images: imagesWithBlurDataUrls,
 		},
 	};
 }

@@ -1,7 +1,7 @@
 ﻿import Head from "next/head";
 import { motion } from "framer-motion";
 import Bridge from "../components/Icons/Bridge";
-import Footer from "./_footer";
+import Footer from "../components/Footer";
 
 const staggerContainer = {
 	hidden: { opacity: 0 },

@@ -1,0 +1,194 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "install",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"install"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "add-eslint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"add",
+				"-D",
+				"eslint"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "add-eslint-config",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"add",
+				"-D",
+				"eslint-config-next",
+				"@eslint/eslintrc"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "add-eslint-eslintrc",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"add",
+				"-D",
+				"@eslint/eslintrc",
+				"eslint-config-next"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "downgrade-eslint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"add",
+				"-D",
+				"eslint@^9.0.0"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "add-cross-env",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"add",
+				"-D",
+				"cross-env"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

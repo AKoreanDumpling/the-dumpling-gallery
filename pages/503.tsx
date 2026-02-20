@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Bridge from "../components/Icons/Bridge";
-import Footer from "./_footer";
+import Footer from "../components/Footer";
 
 
 function Custom503() {
@@ -34,8 +34,7 @@ function Custom503() {
 
 						<a
 							href="/"
-							className="pointer z-10 mt-0 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white hover:scale-105"
-							rel="noreferrer"
+							className="z-10 mt-10 text-sm text-white/75 hover:text-white transition-colors"
 						>
 							Retry
 						</a>

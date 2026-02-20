@@ -1,27 +1,28 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Carousel from "../../components/Carousel";
+import GalleryCarousel from "../../components/GalleryCarousel";
 import getResults from "../../utils/cachedImages";
 import cloudinary from "../../utils/cloudinary";
-import getBase64ImageUrl from "../../utils/generateBlurPlaceholder";
-import { getThumbnailUrl } from "../../utils/mediaHelpers";
 import type { ImageProps } from "../../utils/types";
+import { addBlurDataUrl, mapResourcesToImages } from "../../utils/prepareGalleryImages";
 
 const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	let index = Number(photoId);
 
-	const currentPhotoUrl = getThumbnailUrl(currentPhoto, 2560);
-
 	return (
 		<>
 			<Head>
-				<title>The Dumpling Gallery</title>
+				<title>{index} | The Dumpling Gallery</title>
 			</Head>
 			<main className="mx-auto max-w-[1960px] p-4">
-				<Carousel currentPhoto={currentPhoto} index={index} />
+				<GalleryCarousel
+					currentPhoto={currentPhoto}
+					index={index}
+					storageKey="lastViewedPhoto"
+				/>
 			</main>
 		</>
 	);
@@ -32,28 +33,23 @@ export default Home;
 export const getStaticProps: GetStaticProps = async (context) => {
 	const results = await getResults();
 
-	let reducedResults: ImageProps[] = [];
-	let i = 0;
-	for (let result of results.resources) {
-		reducedResults.push({
-			id: i,
-			height: result.height,
-			width: result.width,
-			public_id: result.public_id,
-			format: result.format,
-			resource_type: result.resource_type,
-		});
-		i++;
-	}
+	const reducedResults = mapResourcesToImages(results.resources);
 
 	const currentPhoto = reducedResults.find(
 		(img) => img.id === Number(context.params.photoId),
 	);
-	currentPhoto.blurDataUrl = await getBase64ImageUrl(currentPhoto);
+
+	if (!currentPhoto) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const currentPhotoWithBlur = await addBlurDataUrl(currentPhoto);
 
 	return {
 		props: {
-			currentPhoto: currentPhoto,
+			currentPhoto: currentPhotoWithBlur,
 		},
 	};
 };

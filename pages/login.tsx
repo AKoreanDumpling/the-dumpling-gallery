@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Bridge from "../components/Icons/Bridge";
-import Footer from "./_footer";
+import Footer from "../components/Footer";
 
 // Animation variants
 const fadeInUp = {

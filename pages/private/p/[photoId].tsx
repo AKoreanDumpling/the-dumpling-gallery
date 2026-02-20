@@ -1,20 +1,18 @@
 ﻿import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import PrivateCarousel from "../../../components/PrivateCarousel";
+import GalleryCarousel from "../../../components/GalleryCarousel";
 import PrivateBanner from "../../../components/PrivateBanner";
-import cloudinary from "../../../utils/cloudinary";
-import getBase64ImageUrl from "../../../utils/generateBlurPlaceholder";
 import { getThumbnailUrl } from "../../../utils/mediaHelpers";
 import type { ImageProps } from "../../../utils/types";
 import { isAuthenticated } from "../../api/auth";
+import getPrivateResults from "../../../utils/cachedPrivateImages";
+import { addBlurDataUrl, mapResourcesToImages } from "../../../utils/prepareGalleryImages";
 
 const PrivatePhoto: NextPage = ({
 	currentPhoto,
-	images,
 }: {
 	currentPhoto: ImageProps;
-	images: ImageProps[];
 }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
@@ -31,7 +29,12 @@ const PrivatePhoto: NextPage = ({
 			</Head>
 			<PrivateBanner />
 			<main className="mx-auto max-w-[1960px] p-4 pt-14">
-				<PrivateCarousel currentPhoto={currentPhoto} index={index} images={images} />
+				<GalleryCarousel
+					currentPhoto={currentPhoto}
+					index={index}
+					basePath="/private"
+					storageKey="privateLastViewedPhoto"
+				/>
 			</main>
 		</>
 	);
@@ -51,25 +54,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		};
 	}
 
-	const results = await cloudinary.v2.search
-		.expression(`folder:${process.env.PRIVATE_CLOUDINARY_FOLDER}/*`)
-		.sort_by("public_id", "desc")
-		.max_results(400)
-		.execute();
-
-	let reducedResults: ImageProps[] = [];
-	let i = 0;
-	for (let result of results.resources) {
-		reducedResults.push({
-			id: i,
-			height: result.height,
-			width: result.width,
-			public_id: result.public_id,
-			format: result.format,
-			resource_type: result.resource_type,
-		});
-		i++;
-	}
+	const results = await getPrivateResults();
+	const reducedResults = mapResourcesToImages(results.resources);
 
 	const currentPhoto = reducedResults.find(
 		(img) => img.id === Number(context.params.photoId),
@@ -81,12 +67,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		};
 	}
 
-	currentPhoto.blurDataUrl = await getBase64ImageUrl(currentPhoto);
+	const currentPhotoWithBlur = await addBlurDataUrl(currentPhoto);
 
 	return {
 		props: {
-			currentPhoto: currentPhoto,
-			images: reducedResults,
+			currentPhoto: currentPhotoWithBlur,
 		},
 	};
 };
