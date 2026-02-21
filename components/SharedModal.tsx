@@ -72,9 +72,21 @@ export default function SharedModal({
 		preloadStartedRef.current = true;
 
 		images.forEach((image) => {
-			const src = getThumbnailUrl(image, 1920);
-			const img = new window.Image();
-			img.src = src;
+			// Preload full resolution image/video
+			const fullUrl = getFullUrl(image);
+			if (isVideo(image)) {
+				const video = document.createElement("video");
+				video.src = fullUrl;
+				video.preload = "metadata";
+			} else {
+				const img = new window.Image();
+				img.src = fullUrl;
+			}
+
+			// Preload thumbnail for carousel
+			const thumbnailSrc = getThumbnailUrl(image, 1920);
+			const thumbnailImg = new window.Image();
+			thumbnailImg.src = thumbnailSrc;
 		});
 	}, [navigation, images]);
 
