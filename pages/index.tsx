@@ -74,10 +74,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 					<GalleryHero
 						title={
 							<>
-								The Dumpling Gallery:<br />Done IV Lunchtime
+								The Dumpling Gallery:<br />Hugh Boyd - Pink Shirt Day
 							</>
 						}
-						dateText="February 20, 2026"
+						dateText="February 25, 2026"
 						showGithub={true}
 						showPrivateAccess={true}
 						showChangelog={true}
