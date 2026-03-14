@@ -14,7 +14,7 @@
 		"@yozora/react-admonition": "3.0.0-alpha.13",
 		"cloudinary": "latest",
 		"cookie": "^1.1.1",
-		"framer-motion": "^7.10.3",
+		"framer-motion": "^12.36.0",
 		"knip": "^5.84.1",
 		"next": "latest",
 		"react": "^18.3.1",
