@@ -289,7 +289,7 @@ function Custom404() {
 				</pre>
 				<a
 					href="/"
-					className="z-10 pt-10 text-sm text-white/75 hover:text-white transition-colors"
+					className="z-10 pt-10 text-sm text-white/75"
 				>
 					← Return to Main Page
 				</a>

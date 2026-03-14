@@ -16,6 +16,10 @@ export interface SharedModalProps {
 	changePhotoId: (newVal: number) => void;
 	closeModal: () => void;
 	navigation: boolean;
+	uiVisible?: boolean;
+	useSharedLayout?: boolean;
+	hideActiveMedia?: boolean;
+	onMediaElementChange?: (element: HTMLElement | null) => void;
 	direction?: number;
 	basePath?: string;
 }

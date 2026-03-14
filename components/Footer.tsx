@@ -19,7 +19,7 @@ function Footer() {
 				<a
 					href="https://instagram.com/AKoreanDumpling"
 					target="_blank"
-					className="pointer mt-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black transition hover:bg-white/10 hover:text-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+					className="pointer mt-1 z-10 rounded-lg border border-white bg-white px-3 py-2 text-sm font-semibold text-black"
 					rel="noreferrer"
 				>
 					Nathan Mah
@@ -28,7 +28,7 @@ function Footer() {
 			<div className="mt-4">
 				<a
 					href="#"
-					className="font-semibold hover:text-white"
+					className="font-semibold"
 					rel="noreferrer"
 				>
 					Back to top
@@ -36,7 +36,7 @@ function Footer() {
 				{" | "}
 				<a
 					href="/license"
-					className="font-semibold hover:text-white"
+					className="font-semibold"
 					rel="noreferrer"
 				>
 					View license

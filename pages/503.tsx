@@ -34,7 +34,7 @@ function Custom503() {
 
 						<a
 							href="/"
-							className="z-10 mt-10 text-sm text-white/75 hover:text-white transition-colors"
+							className="z-10 mt-10 text-sm text-white/75"
 						>
 							Retry
 						</a>
