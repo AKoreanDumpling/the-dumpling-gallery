@@ -6,12 +6,10 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import GalleryHero from "../components/GalleryHero";
 import GalleryModal from "../components/GalleryModal";
-import Changelog from "../components/Changelog";
 import cloudinary from "../utils/cloudinary";
 import type { ImageProps } from "../utils/types";
 import { isVideo, getThumbnailUrl } from "../utils/mediaHelpers";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
-import { useChangelog } from "../utils/useChangelog";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from "../components/Footer";
@@ -25,12 +23,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
-	const {
-		isOpen: isChangelogOpen,
-		openChangelog,
-		closeChangelog,
-		hasUnseenVersion,
-	} = useChangelog();
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
 	const photoMotionRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -114,13 +106,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 				<title>The Dumpling Gallery</title>
 			</Head>
 
-			{/* Changelog Modal */}
-			<Changelog
-				isOpen={isChangelogOpen}
-				onClose={closeChangelog}
-				shouldCelebrate={hasUnseenVersion}
-			/>
-
 			<main className="mx-auto max-w-[1960px] p-4">
 				<LayoutGroup id="public-gallery">
 
@@ -138,14 +123,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						<GalleryHero
 							title={
 								<>
-									The Dumpling Gallery:<br />Done IV Lunchtime
+									The Dumpling Gallery:<br />Pink Shirt Day
 								</>
 							}
-							dateText="February 20, 2026"
+							dateText="February 25, 2026"
 							showGithub={true}
 							showPrivateAccess={true}
-							showChangelog={true}
-							onOpenChangelog={openChangelog}
 						/>
 
 						<div>

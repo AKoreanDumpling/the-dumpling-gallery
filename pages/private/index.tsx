@@ -7,11 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import GalleryHero from "../../components/GalleryHero";
 import GalleryModal from "../../components/GalleryModal";
 import PrivateBanner from "../../components/PrivateBanner";
-import Changelog from "../../components/Changelog";
 import type { ImageProps } from "../../utils/types";
 import { isVideo, getThumbnailUrl } from "../../utils/mediaHelpers";
 import { usePrivateLastViewedPhoto } from "../../utils/usePrivateLastViewedPhoto";
-import { useChangelog } from "../../utils/useChangelog";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "../../components/Footer";
@@ -27,12 +25,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
 	const { photoId } = router.query;
 	const [lastViewedPhoto, setLastViewedPhoto] = usePrivateLastViewedPhoto();
-	const {
-		isOpen: isChangelogOpen,
-		openChangelog,
-		closeChangelog,
-		hasUnseenVersion,
-	} = useChangelog();
 
 	const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
 	const photoMotionRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -123,12 +115,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 			</Head>
 			<PrivateBanner />
 
-			<Changelog
-				isOpen={isChangelogOpen}
-				onClose={closeChangelog}
-				shouldCelebrate={hasUnseenVersion}
-			/>
-
 			<main className="mx-auto max-w-[1960px] p-4 pt-14">
 				<LayoutGroup id="private-gallery">
 					{normalizedPhotoId && isModalReady && (
@@ -151,8 +137,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							}
 							dateText="Febuary 12, 2026"
 							showGithub={true}
-							showChangelog={true}
-							onOpenChangelog={openChangelog}
 							onLogout={handleLogout}
 						/>
 

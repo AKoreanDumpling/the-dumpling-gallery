@@ -5,8 +5,6 @@ import Bridge from "./Icons/Bridge";
 type GalleryHeroProps = {
     title: ReactNode;
     dateText: string;
-    onOpenChangelog?: () => void;
-    showChangelog?: boolean;
     showGithub?: boolean;
     showPrivateAccess?: boolean;
     privateAccessHref?: string;
@@ -16,8 +14,6 @@ type GalleryHeroProps = {
 export default function GalleryHero({
     title,
     dateText,
-    onOpenChangelog,
-    showChangelog = false,
     showGithub = false,
     showPrivateAccess = false,
     privateAccessHref = "/private",
@@ -80,15 +76,6 @@ export default function GalleryHero({
                     className="cursor-pointer z-10 mt-0 rounded-lg border border-red-400 bg-red-500 px-3 py-2 text-sm font-semibold text-white"
                 >
                     Log Out
-                </button>
-            )}
-
-            {showChangelog && onOpenChangelog && (
-                <button
-                    onClick={onOpenChangelog}
-                    className="pointer z-10 mt-0 rounded-lg border border-white bg-black px-3 py-2 text-sm font-semibold text-white cursor-pointer"
-                >
-                    What's New
                 </button>
             )}
         </div>

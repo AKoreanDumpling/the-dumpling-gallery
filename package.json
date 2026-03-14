@@ -12,7 +12,6 @@
 		"@vercel/analytics": "^1.6.1",
 		"@vercel/speed-insights": "^1.3.1",
 		"@yozora/react-admonition": "3.0.0-alpha.13",
-		"canvas-confetti": "^1.9.4",
 		"cloudinary": "latest",
 		"cookie": "^1.1.1",
 		"framer-motion": "^7.10.3",
@@ -24,12 +23,9 @@
 		"react-use-keypress": "^1.4.0"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.3",
 		"@types/node": "25.1.0",
 		"@types/react": "18.2.8",
 		"autoprefixer": "^10.4.24",
-		"eslint": "^9.39.3",
-		"eslint-config-next": "^16.1.6",
 		"postcss": "^8.5.6",
 		"tailwindcss": "^4.2.0",
 		"typescript": "^5.9.3"
