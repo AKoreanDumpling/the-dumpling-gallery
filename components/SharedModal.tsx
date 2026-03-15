@@ -258,7 +258,7 @@ export default function SharedModal({
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         style={{ pointerEvents: uiVisible ? "auto" : "none" }}
                     >
-                        <ChevronLeftIcon className="h-6 w-6" />
+                        <ChevronLeftIcon className="cursor-pointer h-6 w-6" />
                     </motion.button>
                 ) : (
                     navigation && <div className="mr-2 w-14 flex-shrink-0" />
@@ -345,7 +345,7 @@ export default function SharedModal({
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         style={{ pointerEvents: uiVisible ? "auto" : "none" }}
                     >
-                        <ChevronRightIcon className="h-6 w-6" />
+                        <ChevronRightIcon className="cursor-pointer h-6 w-6" />
                     </motion.button>
                 ) : (
                     navigation && <div className="ml-2 w-14 flex-shrink-0" />
