@@ -22,7 +22,7 @@ const EasterEgg: NextPage = () => {
             try {
                 sessionStorage.setItem(FOOTER_ACCESS_KEY, "true");
             } catch {
-                // Ignore storage failures; the session check below will handle redirects.
+
             }
             setIsAllowed(true);
             router.replace("/easteregg", undefined, { shallow: true });
@@ -57,7 +57,7 @@ const EasterEgg: NextPage = () => {
             <main className="mx-auto max-w-[900px] p-6 text-white">
                 <h1 className="text-2xl font-bold">Easter Egg! 🥚</h1>
                 <p className="mt-4 text-white/80">
-                    Hey! You got here! That's pretty cool! 
+                    Hey! You got here! That's pretty cool!
                 </p>
             </main>
         </>

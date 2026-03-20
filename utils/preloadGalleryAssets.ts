@@ -1,5 +1,5 @@
 import type { ImageProps } from "./types";
-import { getFullUrl, getThumbnailUrl, isVideo } from "./mediaHelpers";
+import { getThumbnailUrl } from "./mediaHelpers";
 
 function preloadImage(src: string): Promise<void> {
     return new Promise((resolve) => {
@@ -14,23 +14,38 @@ function preloadImage(src: string): Promise<void> {
     });
 }
 
-export async function preloadGalleryAssets(images: ImageProps[]): Promise<void> {
+type PreloadProgress = {
+    loaded: number;
+    total: number;
+};
+
+export async function preloadGalleryAssets(
+    images: ImageProps[],
+    onProgress?: (progress: PreloadProgress) => void,
+): Promise<void> {
     if (typeof window === "undefined" || images.length === 0) {
+        onProgress?.({ loaded: 0, total: images.length });
         return;
     }
 
-    const urls = new Set<string>();
+    const total = images.length;
+    let loaded = 0;
 
-    for (const image of images) {
-        urls.add(getThumbnailUrl(image, 32));
-        urls.add(getThumbnailUrl(image, 180));
-        urls.add(getThumbnailUrl(image, 720));
-        urls.add(getThumbnailUrl(image, Number(image.width) || 1920));
-        urls.add(getThumbnailUrl(image, 1920));
-        if (!isVideo(image)) {
-            urls.add(getFullUrl(image));
-        }
-    }
+    onProgress?.({ loaded, total });
 
-    await Promise.allSettled(Array.from(urls).map((src) => preloadImage(src)));
+    const preloadTasks = images.map(async (image) => {
+        const urls = [
+            getThumbnailUrl(image, 32),
+            getThumbnailUrl(image, 180),
+            getThumbnailUrl(image, 720),
+            getThumbnailUrl(image, 1920),
+        ];
+
+        await Promise.allSettled(urls.map((src) => preloadImage(src)));
+
+        loaded += 1;
+        onProgress?.({ loaded, total });
+    });
+
+    await Promise.allSettled(preloadTasks);
 }

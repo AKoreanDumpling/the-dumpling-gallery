@@ -8,6 +8,20 @@
 
 html {
 	scroll-behavior: smooth;
+	font-size: clamp(15px, 0.3vw + 14px, 18px);
+}
+
+body {
+	line-height: 1.5;
+	font-family: "Open Sans", sans-serif;
+}
+
+img,
+video,
+canvas,
+svg {
+	max-width: 100%;
+	height: auto;
 }
 
 .scrollbar-hide {

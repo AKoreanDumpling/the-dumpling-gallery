@@ -13,7 +13,6 @@ import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from "../components/Footer";
-import Admonition from '@yozora/react-admonition';
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { addBlurDataUrls, mapResourcesToImages } from "../utils/prepareGalleryImages";
 import { LayoutGroup, motion } from "framer-motion";
@@ -29,6 +28,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const previousPhotoIdRef = useRef<string | null>(null);
 	const skipReturnScrollRef = useRef(false);
 	const [isLoadingAssets, setIsLoadingAssets] = useState(true);
+	const [preloadProgress, setPreloadProgress] = useState({ loaded: 0, total: images.length });
 	const [isModalReady, setIsModalReady] = useState(false);
 
 	const normalizedPhotoId = typeof photoId === "string" ? photoId : null;
@@ -37,7 +37,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 		let isCancelled = false;
 
 		setIsLoadingAssets(true);
-		preloadGalleryAssets(images).finally(() => {
+		setPreloadProgress({ loaded: 0, total: images.length });
+		preloadGalleryAssets(images, (progress) => {
+			if (!isCancelled) {
+				setPreloadProgress(progress);
+			}
+		}).finally(() => {
 			if (!isCancelled) {
 				setIsLoadingAssets(false);
 			}
@@ -49,7 +54,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	}, [images]);
 
 	useEffect(() => {
-		// This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
 		if (lastViewedPhoto && !photoId) {
 			if (!skipReturnScrollRef.current) {
 				lastViewedPhotoRef.current?.scrollIntoView({ block: "center", behavior: "auto" });
@@ -68,8 +72,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 			setIsModalReady(false);
 		} else if (isOpeningModal) {
 			setIsModalReady(false);
-			const target = document.querySelector<HTMLElement>(`[data-photo-id="${normalizedPhotoId}"]`);
-			target?.scrollIntoView({ block: "center", behavior: "auto" });
 			requestAnimationFrame(() => {
 				setIsModalReady(true);
 			});
@@ -81,6 +83,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 	}, [normalizedPhotoId]);
 
 	if (isLoadingAssets) {
+		const total = preloadProgress.total;
+		const loaded = Math.min(preloadProgress.loaded, total);
+		const percent = total > 0 ? Math.round((loaded / total) * 100) : 100;
+
 		return (
 			<>
 				<Head>
@@ -89,8 +95,17 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md">
 					<div className="flex max-w-md flex-col bg-white/10 rounded-xl items-center gap-3 px-6 py-5 text-center text-white">
 						<div className="h-12 w-12 rounded-full border-4 m-5 border-white/20 border-t-white animate-spin" />
+						<p className="text-xs uppercase tracking-widest text-white/70">
+							{loaded}/{total} images loaded ({percent}%)
+						</p>
+						<div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+							<div
+								className="h-full rounded-full bg-white transition-[width] duration-200"
+								style={{ width: `${percent}%` }}
+							/>
+						</div>
 						<p className="text-sm leading-relaxed text-white/90">
-							Preparing The Dumpling Gallery! This will take longer the first time you load.
+							This may take a few minutes, especially on your first visit.
 						</p>
 					</div>
 				</div>
@@ -108,6 +123,16 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 			<main className="mx-auto max-w-[1960px] p-4">
 				<LayoutGroup id="public-gallery">
+					<GalleryHero
+						title={
+							<>
+								The Dumpling Gallery:<br />Pink Shirt Day
+							</>
+						}
+						dateText="February 25, 2026"
+						showPrivateAccess={true}
+						className="mb-4"
+					/>
 
 					{normalizedPhotoId && isModalReady && (
 						<GalleryModal
@@ -119,31 +144,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 						/>
 					)}
 
-					<div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-						<GalleryHero
-							title={
-								<>
-									The Dumpling Gallery:<br />Pink Shirt Day
-								</>
-							}
-							dateText="February 25, 2026"
-							showGithub={true}
-							showPrivateAccess={true}
-						/>
-
-						<div>
-							<Admonition
-								keyword="info"
-								title={<span className="uppercase"><strong>Please Note</strong></span>}
-							>
-								Photos will typically stay up for 1 week before being removed to manage storage.
-							</Admonition>
-						</div>
-
+					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 						{images.map((image) => (
 							<div
 								key={image.id}
-								className="mb-5"
 							>
 								<Link
 									href={`/?photoId=${image.id}`}

@@ -1,12 +1,15 @@
-export default function Bridge() {
+type BridgeProps = {
+  className?: string;
+};
+
+export default function Bridge({ className }: BridgeProps) {
   return (
     <svg
       aria-labelledby="conf-city-title"
+      className={className}
       fill="none"
       role="img"
       viewBox="0 0 620 704"
-      width="620"
-      height="704"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title id="conf-city-title">

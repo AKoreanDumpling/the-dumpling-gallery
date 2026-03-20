@@ -15,7 +15,7 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 	return (
 		<>
 			<Head>
-				<title>{index} | The Dumpling Gallery</title>
+				<title>Photo {index} | The Dumpling Gallery</title>
 			</Head>
 			<main className="mx-auto max-w-[1960px] p-4">
 				<GalleryCarousel
@@ -62,7 +62,7 @@ export async function getStaticPaths() {
 		.execute();
 
 	let fullPaths = [];
-	for (let i = 0; i < results.resources.length; i++) {
+	for (let i = 1; i <= results.resources.length; i++) {
 		fullPaths.push({ params: { photoId: i.toString() } });
 	}
 

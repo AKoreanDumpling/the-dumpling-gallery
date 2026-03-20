@@ -11,7 +11,7 @@ type CloudinaryResource = {
 
 export function mapResourcesToImages(resources: CloudinaryResource[]): ImageProps[] {
     return resources.map((resource, index) => ({
-        id: index,
+        id: index + 1,
         height: String(resource.height),
         width: String(resource.width),
         public_id: resource.public_id,

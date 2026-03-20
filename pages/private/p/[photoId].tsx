@@ -23,7 +23,7 @@ const PrivatePhoto: NextPage = ({
 	return (
 		<>
 			<Head>
-				<title>Private Photo | The Dumpling Gallery</title>
+				<title>Private Photo {index} | The Dumpling Gallery</title>
 				<meta property="og:image" content={currentPhotoUrl} />
 				<meta name="twitter:image" content={currentPhotoUrl} />
 			</Head>

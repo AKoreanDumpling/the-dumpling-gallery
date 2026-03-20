@@ -44,7 +44,7 @@ export default function GalleryModal({
     const openAnimationPlayedRef = useRef(false);
     const closeFrameRef = useRef<number | null>(null);
 
-    const currentImage = images[curIndex];
+    const currentImage = images[curIndex - 1];
     const listPath = basePath || "/";
     const queryPath = basePath === "" ? "/" : basePath;
 
@@ -110,13 +110,13 @@ export default function GalleryModal({
     }
 
     useKeypress("ArrowRight", () => {
-        if (curIndex + 1 < images.length) {
+        if (curIndex < images.length) {
             changePhotoId(curIndex + 1);
         }
     });
 
     useKeypress("ArrowLeft", () => {
-        if (curIndex > 0) {
+        if (curIndex > 1) {
             changePhotoId(curIndex - 1);
         }
     });
@@ -160,7 +160,12 @@ export default function GalleryModal({
                 key="backdrop"
                 className="fixed inset-0 z-30 flex items-center justify-center"
             >
-                <div className="absolute inset-0 -z-10 overflow-hidden bg-black">
+                <motion.div
+                    className="absolute inset-0 -z-10 overflow-hidden bg-black"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isClosing ? 0 : 1 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                >
                     <AnimatePresence mode="sync" initial={false}>
                         {currentImage && (
                             <motion.div
@@ -182,7 +187,7 @@ export default function GalleryModal({
                             </motion.div>
                         )}
                     </AnimatePresence>
-                </div>
+                </motion.div>
                 <motion.div
                     className="absolute inset-0 -z-10 bg-black"
                     initial={{ opacity: 0 }}

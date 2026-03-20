@@ -15,7 +15,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "../../components/Footer";
 import { isAuthenticated } from "../api/auth";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import Admonition from '@yozora/react-admonition';
 import getPrivateResults from "../../utils/cachedPrivateImages";
 import { addBlurDataUrls, mapResourcesToImages } from "../../utils/prepareGalleryImages";
 import { preloadGalleryAssets } from "../../utils/preloadGalleryAssets";
@@ -78,8 +77,6 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 			setIsModalReady(false);
 		} else if (isOpeningModal) {
 			setIsModalReady(false);
-			const target = document.querySelector<HTMLElement>(`[data-photo-id="${normalizedPhotoId}"]`);
-			target?.scrollIntoView({ block: "center", behavior: "auto" });
 			requestAnimationFrame(() => {
 				setIsModalReady(true);
 			});
@@ -117,6 +114,17 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 
 			<main className="mx-auto max-w-[1960px] p-4 pt-14">
 				<LayoutGroup id="private-gallery">
+					<GalleryHero
+						title={
+							<>
+								The Dumpling Gallery:<br />Interact Bubble Tea Sale
+							</>
+						}
+						dateText="Febuary 12, 2026"
+						onLogout={handleLogout}
+						className="mb-4"
+					/>
+
 					{normalizedPhotoId && isModalReady && (
 						<GalleryModal
 							images={images}
@@ -128,32 +136,10 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 						/>
 					)}
 
-					<div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-						<GalleryHero
-							title={
-								<>
-									The Dumpling Gallery:<br />Interact Bubble Tea Sale
-								</>
-							}
-							dateText="Febuary 12, 2026"
-							showGithub={true}
-							onLogout={handleLogout}
-						/>
-
-						<div>
-							<Admonition
-								keyword="info"
-								title={<span className="uppercase"><strong>Please Note</strong></span>}
-							>
-								Photos will typically stay up for 1 week before being removed to manage storage.
-							</Admonition>
-						</div>
-
-
+					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 						{images.map((image) => (
 							<div
 								key={image.id}
-								className="mb-5"
 							>
 								<Link
 									href={`/private?photoId=${image.id}`}
@@ -211,6 +197,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 							</div>
 						))}
 					</div>
+
 				</LayoutGroup>
 				<Analytics />
 				<SpeedInsights />

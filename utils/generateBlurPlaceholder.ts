@@ -1,4 +1,5 @@
 import type { ImageProps } from "./types";
+import { getFullUrl } from "./mediaHelpers";
 
 const cache = new Map<ImageProps, string>();
 
@@ -10,14 +11,13 @@ export default async function getBase64ImageUrl(
 		return url;
 	}
 
-	let cloudinaryUrl: string;
 	if (image.resource_type === "video") {
-		// Use Cloudinary video thumbnail (first frame) for blur placeholder
-		cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/so_0/${image.public_id}.jpg`;
-	} else {
-		// Original Cloudinary image URL
-		cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${image.public_id}.${image.format}`;
+		url = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjYiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjYiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=";
+		cache.set(image, url);
+		return url;
 	}
+
+	const cloudinaryUrl = getFullUrl(image);
 
 	// Use wsrv.nl loader for blur placeholder
 	const wsrvUrl = new URL('https://wsrv.nl/');

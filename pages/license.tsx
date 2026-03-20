@@ -2,7 +2,7 @@ import Head from "next/head";
 import Footer from "../components/Footer";
 
 
-function Custom404() {
+function License() {
 	return (
 		<>
 			<Head>
@@ -300,4 +300,4 @@ function Custom404() {
 };
 
 
-export default Custom404;
+export default License;
