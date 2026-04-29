@@ -126,10 +126,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 					<GalleryHero
 						title={
 							<>
-								The Dumpling Gallery:<br />Pink Shirt Day
+								The Dumpling Gallery:<br />Done IV Photo Dump
 							</>
 						}
-						dateText="February 25, 2026"
+						dateText="2025-2026"
 						showPrivateAccess={true}
 						className="mb-4"
 					/>
@@ -156,7 +156,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 									shallow
 									scroll={false}
 									data-photo-id={image.id}
-									className="after:content relative block w-full cursor-hand after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+									className="after:content overflow-hidden relative block w-full cursor-hand after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
 								>
 									<motion.div
 										ref={(element) => {
@@ -177,17 +177,17 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 										}}
 										className="relative z-0 w-full overflow-hidden rounded-lg"
 										style={{
-											aspectRatio: `${Number(image.width) || 3} / ${Number(image.height) || 2}`,
+											aspectRatio: 3 / 2,
 										}}
 									>
 										<Image
 											alt={isVideo(image) ? "Video thumbnail" : "Photo"}
-											className="h-full w-full rounded-lg object-cover brightness-90"
+											className="h-480 w-720 rounded-lg object-fit brightness-90"
 											placeholder="blur"
 											blurDataURL={image.blurDataUrl}
 											src={getThumbnailUrl(image, 720)}
-											width={Number(image.width) || 720}
-											height={Number(image.height) || 480}
+											width={720}
+											height={480}
 											sizes="(max-width: 640px) 100vw,
 					  (max-width: 1280px) 50vw,
 					  (max-width: 1536px) 33vw,
