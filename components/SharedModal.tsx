@@ -628,7 +628,7 @@ export default function SharedModal({
                         <AnimatePresence initial={false} mode="wait" custom={effectiveDirection}>
                             {currentImage && (
                                 <motion.div
-                                    key={currentImage.public_id}
+                                    key={`${currentImage.public_id || "image"}-${currentImage.id}`}
                                     custom={effectiveDirection}
                                     variants={mediaVariants}
                                     initial="enter"

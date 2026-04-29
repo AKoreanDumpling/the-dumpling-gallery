@@ -7,6 +7,10 @@ export interface ImageProps {
 	format: string;
 	resource_type?: string;
 	blurDataUrl?: string;
+	signedUrl?: string;
+	signedPosterUrl?: string;
+	signedThumbnailUrls?: Record<string, string>;
+	signedPosterThumbnailUrls?: Record<string, string>;
 }
 
 export interface SharedModalProps {

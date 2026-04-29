@@ -169,7 +169,7 @@ export default function GalleryModal({
                     <AnimatePresence mode="sync" initial={false}>
                         {currentImage && (
                             <motion.div
-                                key={currentImage.public_id}
+                                key={`${currentImage.public_id || "image"}-${currentImage.id}`}
                                 className="absolute inset-[-10%]"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}

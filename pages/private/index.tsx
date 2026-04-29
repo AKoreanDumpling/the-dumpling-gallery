@@ -19,6 +19,7 @@ import getPrivateResults from "../../utils/cachedPrivateImages";
 import { addBlurDataUrls, mapResourcesToImages } from "../../utils/prepareGalleryImages";
 import { preloadGalleryAssets } from "../../utils/preloadGalleryAssets";
 import { LayoutGroup, motion } from "framer-motion";
+import { addSignedImageUrls } from "../../utils/imagekit";
 
 const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 	const router = useRouter();
@@ -178,6 +179,7 @@ const PrivateHome: NextPage = ({ images }: { images: ImageProps[] }) => {
 											placeholder="blur"
 											blurDataURL={image.blurDataUrl}
 											src={getThumbnailUrl(image, 720)}
+											unoptimized={Boolean(image.signedUrl || image.signedThumbnailUrls || image.signedPosterUrl)}
 											width={Number(image.width) || 720}
 											height={Number(image.height) || 480}
 											sizes="(max-width: 640px) 100vw,
@@ -224,7 +226,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	const results = await getPrivateResults();
 	const reducedResults = mapResourcesToImages(results.resources);
-	const imagesWithBlurDataUrls = await addBlurDataUrls(reducedResults);
+	const signedResults = addSignedImageUrls(reducedResults);
+	const imagesWithBlurDataUrls = await addBlurDataUrls(signedResults);
 
 	return {
 		props: {

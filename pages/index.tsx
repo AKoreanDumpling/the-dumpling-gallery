@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import GalleryHero from "../components/GalleryHero";
 import GalleryModal from "../components/GalleryModal";
-import cloudinary from "../utils/cloudinary";
 import type { ImageProps } from "../utils/types";
 import { isVideo, getThumbnailUrl } from "../utils/mediaHelpers";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
@@ -15,6 +14,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from "../components/Footer";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { addBlurDataUrls, mapResourcesToImages } from "../utils/prepareGalleryImages";
+import getResults from "../utils/cachedImages";
 import { LayoutGroup, motion } from "framer-motion";
 import { preloadGalleryAssets } from "../utils/preloadGalleryAssets";
 
@@ -220,11 +220,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
 export default Home;
 
 export async function getStaticProps() {
-	const results = await cloudinary.v2.search
-		.expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
-		.sort_by("public_id", "desc")
-		.max_results(400)
-		.execute();
+	const results = await getResults();
 	const reducedResults = mapResourcesToImages(results.resources);
 	const imagesWithBlurDataUrls = await addBlurDataUrls(reducedResults);
 

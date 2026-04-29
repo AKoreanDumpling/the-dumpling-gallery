@@ -1,20 +1,32 @@
 'use client'
 
-export default function myImageLoader({ src, width, quality }) {
-	const url = new URL(src.startsWith("http") ? src : `https:${src}`);
+const IMAGEKIT_HOSTNAME = "ik.imagekit.io";
 
-	if (url.hostname === "wsrv.nl") {
-		url.searchParams.set("w", width.toString());
-		url.searchParams.set("q", (quality || 100).toString());
-		url.searchParams.set("output", "webp");
+function hasSignedParams(url) {
+	return url.searchParams.has("ik-s") || url.searchParams.has("ik-t");
+}
+
+export default function myImageLoader({ src, width, quality }) {
+	if (src.startsWith("/")) {
+		return src;
+	}
+
+	const url = new URL(src.startsWith("http") ? src : `https:${src}`);
+	if (url.hostname !== IMAGEKIT_HOSTNAME) {
 		return url.href;
 	}
 
-	const wsrvUrl = new URL("https://wsrv.nl/");
-	wsrvUrl.searchParams.set("url", src);
-	wsrvUrl.searchParams.set("w", width.toString());
-	wsrvUrl.searchParams.set("q", (quality || 100).toString());
-	wsrvUrl.searchParams.set("output", "webp");
+	if (hasSignedParams(url) || url.searchParams.has("tr")) {
+		return url.href;
+	}
 
-	return wsrvUrl.href;
+	const transforms = [];
+	if (width) {
+		transforms.push(`w-${width}`);
+	}
+	transforms.push(`q-${quality || 90}`);
+	transforms.push("f-webp");
+	url.searchParams.set("tr", transforms.join(","));
+
+	return url.href;
 }

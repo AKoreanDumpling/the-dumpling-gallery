@@ -27,7 +27,7 @@ export default function GalleryHero({
             <div
                 className="after:content relative flex max-w-full h-[97vh] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0"
             >
-                <div className="absolute inset-0 flex items-center justify-center p-6 opacity-20">
+                <div className="absolute inset-0 flex items-center justify-center p-6 opacity-20 pointer-events-none">
                     <span className="flex h-full w-full items-center justify-center">
                         <Bridge className="h-full w-auto max-h-full max-w-full" />
                     </span>

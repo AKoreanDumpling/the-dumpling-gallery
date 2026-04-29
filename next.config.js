@@ -5,9 +5,9 @@ module.exports = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "res.cloudinary.com",
+				hostname: "ik.imagekit.io",
 				port: "",
-				pathname: "/the-dumpling-cloud/**",
+				pathname: "/**",
 				search: "",
 			},
 		],

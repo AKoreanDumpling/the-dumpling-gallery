@@ -8,6 +8,7 @@ import type { ImageProps } from "../../../utils/types";
 import { isAuthenticated } from "../../api/auth";
 import getPrivateResults from "../../../utils/cachedPrivateImages";
 import { addBlurDataUrl, mapResourcesToImages } from "../../../utils/prepareGalleryImages";
+import { addSignedImageUrls } from "../../../utils/imagekit";
 
 const PrivatePhoto: NextPage = ({
 	currentPhoto,
@@ -67,7 +68,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		};
 	}
 
-	const currentPhotoWithBlur = await addBlurDataUrl(currentPhoto);
+	const signedPhoto = addSignedImageUrls([currentPhoto])[0];
+	const currentPhotoWithBlur = await addBlurDataUrl(signedPhoto);
 
 	return {
 		props: {

@@ -1,33 +1,66 @@
 import type { ImageProps } from "./types";
 
+const IMAGEKIT_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+
 export function isVideo(media: Pick<ImageProps, "resource_type"> | undefined): boolean {
 	return media?.resource_type === "video";
 }
 
-function getCloudinaryCdnUrl(
-	media: Pick<ImageProps, "public_id" | "format" | "resource_type">,
-	formatOverride?: string,
+function getImageKitEndpoint(): string {
+	if (!IMAGEKIT_ENDPOINT) {
+		throw new Error("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT is not set.");
+	}
+	return IMAGEKIT_ENDPOINT.replace(/\/$/, "");
+}
+
+function getImageKitAssetPath(
+	media: Pick<ImageProps, "public_id" | "format">,
 ): string {
-	const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-	const type = isVideo(media) ? "video" : "image";
-	const format = formatOverride ?? media.format;
-	return `https://res.cloudinary.com/${cloud}/${type}/upload/${media.public_id}.${format}`;
+	if (!media.format) {
+		return media.public_id;
+	}
+	return `${media.public_id}.${media.format}`;
 }
 
-function getWsrvUrl(src: string, width: number): string {
-	const wsrvUrl = new URL("https://wsrv.nl/");
-	wsrvUrl.searchParams.set("url", src);
-	wsrvUrl.searchParams.set("w", width.toString());
-	wsrvUrl.searchParams.set("q", "90");
-	wsrvUrl.searchParams.set("output", "webp");
-	return wsrvUrl.href;
+function getImageKitUrl(
+	media: Pick<ImageProps, "public_id" | "format">,
+	transforms: string[] = [],
+): string {
+	const baseUrl = `${getImageKitEndpoint()}/${getImageKitAssetPath(media)}`;
+	if (transforms.length === 0) {
+		return baseUrl;
+	}
+
+	const url = new URL(baseUrl);
+	url.searchParams.set("tr", transforms.join(","));
+	return url.href;
 }
 
-export function getThumbnailUrl(media: Pick<ImageProps, "public_id" | "format" | "resource_type">, width: number): string {
-	const source = getCloudinaryCdnUrl(media, isVideo(media) ? "jpg" : undefined);
-	return getWsrvUrl(source, width);
+type MediaWithSignedUrls = Pick<
+	ImageProps,
+	"public_id" | "format" | "resource_type" | "signedUrl" | "signedPosterUrl" | "signedThumbnailUrls" | "signedPosterThumbnailUrls"
+>;
+
+export function getThumbnailUrl(media: MediaWithSignedUrls, width: number): string {
+	const widthKey = width.toString();
+	const signedVariant = isVideo(media)
+		? media.signedPosterThumbnailUrls?.[widthKey] ?? media.signedPosterUrl
+		: media.signedThumbnailUrls?.[widthKey];
+	if (signedVariant) {
+		return signedVariant;
+	}
+
+	const signedFallback = isVideo(media) ? media.signedPosterUrl : media.signedUrl;
+	if (signedFallback) {
+		return signedFallback;
+	}
+
+	const transforms = isVideo(media)
+		? ["f-jpg", "so-0", `w-${width}`, "q-90"]
+		: [`w-${width}`, "q-90", "f-webp"];
+	return getImageKitUrl(media, transforms);
 }
 
-export function getFullUrl(media: Pick<ImageProps, "public_id" | "format" | "resource_type">): string {
-	return getCloudinaryCdnUrl(media);
-} 
+export function getFullUrl(media: MediaWithSignedUrls): string {
+	return media.signedUrl ?? getImageKitUrl(media);
+}

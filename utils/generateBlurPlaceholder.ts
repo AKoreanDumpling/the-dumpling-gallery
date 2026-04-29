@@ -1,5 +1,5 @@
 import type { ImageProps } from "./types";
-import { getFullUrl } from "./mediaHelpers";
+import { getThumbnailUrl } from "./mediaHelpers";
 
 const cache = new Map<ImageProps, string>();
 
@@ -17,17 +17,8 @@ export default async function getBase64ImageUrl(
 		return url;
 	}
 
-	const cloudinaryUrl = getFullUrl(image);
-
-	// Use wsrv.nl loader for blur placeholder
-	const wsrvUrl = new URL('https://wsrv.nl/');
-	wsrvUrl.searchParams.set('url', cloudinaryUrl);
-	wsrvUrl.searchParams.set('w', '8');
-	wsrvUrl.searchParams.set('q', '70');
-	wsrvUrl.searchParams.set('blur', '5');
-	wsrvUrl.searchParams.set('output', 'webp');
-
-	const response = await fetch(wsrvUrl.href);
+	const thumbnailUrl = getThumbnailUrl(image, 8);
+	const response = await fetch(thumbnailUrl);
 	const buffer = await response.arrayBuffer();
 
 	url = `data:image/webp;base64,${Buffer.from(buffer).toString("base64")}`;

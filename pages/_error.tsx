@@ -7,10 +7,7 @@ function Error({ statusCode }) {
 	return (
 		<>
 			<Head>
-				<title>{
-					statusCode
-						? `Error ${statusCode} | The Dumpling Gallery`
-						: 'Client Error | The Dumpling Gallery'}</title>
+				<title>{statusCode ? `Error ${statusCode} | The Dumpling Gallery` : "Client Error | The Dumpling Gallery"}</title>
 			</Head>
 
 			<main className="mx-auto max-w-[1960px] p-4">

@@ -34,12 +34,17 @@ export async function preloadGalleryAssets(
     onProgress?.({ loaded, total });
 
     const preloadTasks = images.map(async (image) => {
-        const urls = [
-            getThumbnailUrl(image, 32),
-            getThumbnailUrl(image, 180),
-            getThumbnailUrl(image, 720),
-            getThumbnailUrl(image, 1920),
-        ];
+        const hasSignedVariants = Boolean(
+            image.signedThumbnailUrls || image.signedPosterThumbnailUrls,
+        );
+        const urls = hasSignedVariants
+            ? [
+                getThumbnailUrl(image, 32),
+                getThumbnailUrl(image, 180),
+                getThumbnailUrl(image, 720),
+                getThumbnailUrl(image, 1920),
+            ]
+            : [getThumbnailUrl(image, 720)];
 
         await Promise.allSettled(urls.map((src) => preloadImage(src)));
 

@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import GalleryCarousel from "../../components/GalleryCarousel";
 import getResults from "../../utils/cachedImages";
-import cloudinary from "../../utils/cloudinary";
 import type { ImageProps } from "../../utils/types";
 import { addBlurDataUrl, mapResourcesToImages } from "../../utils/prepareGalleryImages";
 
@@ -55,11 +54,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export async function getStaticPaths() {
-	const results = await cloudinary.v2.search
-		.expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
-		.sort_by("public_id", "desc")
-		.max_results(400)
-		.execute();
+	const results = await getResults();
 
 	let fullPaths = [];
 	for (let i = 1; i <= results.resources.length; i++) {
